@@ -10,7 +10,7 @@ const sequelize = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.
 });
 
 sequelize
-  .sync(
+  .authenticate(
     {
 
     }

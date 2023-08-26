@@ -17,6 +17,8 @@ app.get('/houdix/school', (req, res) => {
     return res.json("welcome to houdix app!");
 });
 
+app.use('/houdix/school/managers', require('./src/app/Manager/router'));
+
 app.listen({ port: process.env.PORT }, async () => {
     // await database.sync();
     console.log('starting on port : ' + process.env.PORT);

@@ -1,0 +1,13 @@
+const { Manager } = require('./service');
+
+
+module.exports = {
+
+    addManager: async (req, res) => {
+        const result = await new Manager(req.body).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+}
