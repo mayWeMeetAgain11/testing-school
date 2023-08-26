@@ -5,11 +5,17 @@ const sequelize = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.
   host: process.env.DBHOST,
   dialect: 'mysql',
   benchmark: true,
+  logging: console.log,
 
 });
 
 sequelize
-  .sync()
+  .sync(
+    {
+      // alter: true,
+      force: true
+    }
+  )
   .then(() => {
     console.log('Connection has been established successfully.');
   })
