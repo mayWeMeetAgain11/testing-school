@@ -26,6 +26,32 @@ class Manager {
         }
     }
 
+    async update(id) {
+        try {
+            const manager = await ManagerModel.update(this, {
+                where: {
+                    id: id
+                }
+            });
+            if (manager == 1) {
+                return {
+                    data: "updated",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
     
     static async login(email, password) {
         try {

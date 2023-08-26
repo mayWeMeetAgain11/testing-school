@@ -18,4 +18,11 @@ module.exports = {
         });
     },
 
+    updateManager: async (req, res) => {
+        const result = await new Manager(req.body).update(req.user.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
