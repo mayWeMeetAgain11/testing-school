@@ -12,8 +12,7 @@ const sequelize = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.
 sequelize
   .sync(
     {
-      // alter: true,
-      force: true
+
     }
   )
   .then(() => {

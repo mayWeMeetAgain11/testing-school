@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const { sequelize } = require('./utils/database');
+const { database } = require('./src/app')
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
@@ -17,7 +18,7 @@ app.get('/houdix/school', (req, res) => {
 });
 
 app.listen({ port: process.env.PORT }, async () => {
-    // await sequelize.sync({alter:true});
+    // await database.sync();
     console.log('starting on port : ' + process.env.PORT);
 });
 
