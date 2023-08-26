@@ -26,6 +26,41 @@ class Manager {
         }
     }
 
+    
+    static async login(email, password) {
+        try {
+            const manager = await ManagerModel.findOne({
+                where: {
+                    email: email
+                }
+            });
+            if (!manager) {
+                return {
+                    data: 'email Not Found',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else if (password !== manager.password) {
+                return {
+                    data: 'Invalid password',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else {
+                return {
+                    data: {
+                        token: manager.generateToken(),
+                        data: manager
+                    },
+                    status: httpStatus.OK
+                }
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.INTERNAL_SERVER_ERROR
+            }
+        }
+    }
+
 }
 
 module.exports = { Manager };

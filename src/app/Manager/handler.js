@@ -10,4 +10,12 @@ module.exports = {
         });
     },
 
+    managerLogin: async (req, res) => {
+        const {email, password} = req.body;
+        const result = await Manager.login(email, password);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
