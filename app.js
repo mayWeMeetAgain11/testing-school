@@ -18,6 +18,7 @@ app.get('/houdix/school', (req, res) => {
 });
 
 app.use('/houdix/school/managers', require('./src/app/Manager/router'));
+app.use('/houdix/school/classes', require('./src/app/Class/router'));
 
 app.listen({ port: process.env.PORT }, async () => {
     // await database.sync();
