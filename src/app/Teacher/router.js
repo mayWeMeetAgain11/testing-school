@@ -3,6 +3,7 @@ const {
     teacherLogin,
     updateTeacher,
     addSubjectToTeacher,
+    unRelateTeacherWithOneSubject,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -13,8 +14,10 @@ router.use(isAuth);
 
 router.post('/register', addTeacher);
 
-router.post('/subjects/add-one', isAuth, addSubjectToTeacher);
-
 router.put('/update', updateTeacher);
+
+router.post('/subjects/add-one', addSubjectToTeacher);
+
+router.delete('/subjects/delete-one/:subject_id', unRelateTeacherWithOneSubject);
 
 module.exports = router;

@@ -27,10 +27,18 @@ module.exports = {
     },
 
     addSubjectToTeacher: async (req, res) => {
-        const teacher_id = req.user.id;
         let data = req.body;
-        data.teacher_id = teacher_id;
         const result = await new TeacherSubject(data).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    unRelateTeacherWithOneSubject: async (req, res) => {
+        const {subject_id} = req.params;
+        let data = req.body;
+        data.subject_id = subject_id;
+        const result = await TeacherSubject.delete(data);
         res.status(result.status).send({
             data: result.data,
         });

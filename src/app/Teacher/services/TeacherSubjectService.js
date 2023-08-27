@@ -23,6 +23,33 @@ class TeacherSubject {
         }
     }
 
+    static async delete(data) {
+        try {
+            const teacherSubject = await TeacherSubjectModel.destroy({
+                where: {
+                    teacher_id: data.teacher_id,
+                    subject_id: data.subject_id
+                }
+            });
+            if (teacherSubject == 1) {
+                return {
+                    data: 'deleted',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { TeacherSubject };
