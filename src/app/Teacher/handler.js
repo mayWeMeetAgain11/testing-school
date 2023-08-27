@@ -1,6 +1,7 @@
 const { Teacher,  } = require('./services/TeacherService');
 const { TeacherSubject,  } = require('./services/TeacherSubjectService');
 const { TeacherNote,  } = require('./services/TeacherNoteService');
+const { TeacherNoteStudent,  } = require('./services/TeacherNoteStudentService');
 const { Factory,  } = require('./services/helper/factory');
 const httpStatus = require('../../../utils/httpStatus');
 const {database} = require('../index');
@@ -103,6 +104,15 @@ module.exports = {
         let data = req.body;
         data.subject_id = subject_id;
         const result = await TeacherSubject.delete(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    relateNoteWithStudent: async (req, res) => {
+        let data = req.body;
+        data.teacher_note_id = req.params.id;
+        const result = await new TeacherNoteStudent(data).add();
         res.status(result.status).send({
             data: result.data,
         });

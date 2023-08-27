@@ -9,6 +9,7 @@ const {
     addTeacherNote,
     deleteNote,
     updateTeacherNote,
+    relateNoteWithStudent,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -26,6 +27,12 @@ router.put('/notes/update/:note_id', updateTeacherNote);
 router.delete('/delete/:id', deleteTeacher);
 
 router.delete('/notes/delete/:id', deleteNote);
+
+router.post('/notes/students/add-one/:id', relateNoteWithStudent);
+
+// router.post('/notes/students/add-all/:id', relateNoteWithAllStudentsGroup);
+
+// router.delete('/notes/students/delete-one/:id',unRelateNoteWithOneStudent);
 
 router.post('/subjects/add-one', addSubjectToTeacher);
 
