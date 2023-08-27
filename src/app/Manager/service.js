@@ -51,7 +51,6 @@ class Manager {
             }
         }
     }
-
     
     static async login(email, password) {
         try {
