@@ -28,6 +28,13 @@ module.exports = {
             data: result.data,
         });
     },
+    
+    deleteTeacher: async (req, res) => {
+        const result = await Teacher.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
     addSubjectToTeacher: async (req, res) => {
         let data = req.body;
