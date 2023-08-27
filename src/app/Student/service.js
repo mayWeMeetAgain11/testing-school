@@ -88,6 +88,23 @@ class Student {
         }
     }
     
+    static async linkToGroup(id, data) {
+        try {
+            const student = await StudentModel.findByPk(id);
+            student.group_id = data.group_id;
+            student.save();
+            return {
+                data: "related to a new group",
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
     static async delete(id) {
         try {
             const student = await StudentModel.destroy({

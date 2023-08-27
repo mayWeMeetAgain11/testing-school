@@ -33,4 +33,12 @@ module.exports = {
         });
     },
 
+    linkStudentToNewGroup: async (req, res) => {
+        const data = req.body;
+        const result = await Student.linkToGroup(req.params.id, data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
