@@ -1,8 +1,14 @@
 
 const { Model } = require('sequelize');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
     class StudentModel extends Model {
+        generateToken(){
+            const token = jwt.sign({ id: this.id, user : this.user }, process.env.SECRETKEY);
+            return token;
+        }
 
         static associate(models) {
             this.belongsTo(models.GroupModel, {

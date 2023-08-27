@@ -27,6 +27,40 @@ class Student {
             }
         }
     }
+        
+    static async login(email, password) {
+        try {
+            const student = await StudentModel.findOne({
+                where: {
+                    email: email
+                }
+            });
+            if (!student) {
+                return {
+                    data: 'email Not Found',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else if (password !== student.password) {
+                return {
+                    data: 'Invalid password',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else {
+                return {
+                    data: {
+                        token: student.generateToken(),
+                        data: student
+                    },
+                    status: httpStatus.OK
+                }
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.INTERNAL_SERVER_ERROR
+            }
+        }
+    }
 
 }
 
