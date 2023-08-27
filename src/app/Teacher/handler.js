@@ -9,5 +9,13 @@ module.exports = {
             data: result.data,
         });
     },
+        
+    teacherLogin: async (req, res) => {
+        const {email, password} = req.body;
+        const result = await Teacher.login(email, password);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
 }

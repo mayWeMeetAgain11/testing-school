@@ -26,6 +26,40 @@ class Teacher {
             }
         }
     }
+            
+    static async login(email, password) {
+        try {
+            const teacher = await TeacherModel.findOne({
+                where: {
+                    email: email
+                }
+            });
+            if (!teacher) {
+                return {
+                    data: 'email Not Found',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else if (password !== teacher.password) {
+                return {
+                    data: 'Invalid password',
+                    status: httpStatus.NOT_FOUND
+                }
+            } else {
+                return {
+                    data: {
+                        token: teacher.generateToken(),
+                        data: teacher
+                    },
+                    status: httpStatus.OK
+                }
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.INTERNAL_SERVER_ERROR
+            }
+        }
+    }
 
 }
 
