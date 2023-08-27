@@ -1,5 +1,6 @@
 
 const { Model } = require('sequelize');
+const { day } = require('./enum.json')
 
 module.exports = (sequelize, DataTypes) => {
     class ScheduleModel extends Model {
@@ -13,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
     ScheduleModel.init({
         day: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM,
+            values: day,
             allowNull: false,
         },
         start_time: {

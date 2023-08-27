@@ -42,14 +42,14 @@ module.exports = {
         try {
             const {group_id} = req.params;
             let {teacher_subject_ids} = req.body;
-            const result = await database.transaction(async (transaction) => {
+            const result = await database.transaction(async (t) => {
                 console.log("1");
-                const deletedSubjects = await GroupTeacherSubject.deleteAllForOneGroup(group_id, { transaction });
+                const deletedSubjects = await GroupTeacherSubject.deleteAllForOneGroup(group_id, { transaction: t });
                 console.log("2");
                 const factoriedData = Factory.relateAllObjectsWithOneProperty(teacher_subject_ids, group_id);
                 console.log("3");
                 console.log(factoriedData);
-                const addedTeacherSubjects = await GroupTeacherSubject.relateAllGroupOfTeacherSubjects(factoriedData, { transaction });
+                const addedTeacherSubjects = await GroupTeacherSubject.relateAllGroupOfTeacherSubjects(factoriedData, { transaction: t });
                 console.log("4");
                 // await transaction.commit();
                 return addedTeacherSubjects;
