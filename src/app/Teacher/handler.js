@@ -118,4 +118,13 @@ module.exports = {
         });
     },
 
+    unRelateNoteWithOneStudent: async (req, res) => {
+        let data = req.body;
+        data.teacher_note_id = req.params.id;
+        const result = await TeacherNoteStudent.delete(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
