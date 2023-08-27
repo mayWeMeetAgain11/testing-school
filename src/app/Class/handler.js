@@ -17,4 +17,11 @@ module.exports = {
         });
     },
 
+    deleteClass: async (req, res) => {
+        const result = await Class.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
