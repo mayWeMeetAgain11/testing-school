@@ -17,4 +17,11 @@ module.exports = {
         });
     },
 
+    deleteSubject: async (req, res) => {
+        const result = await Subject.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

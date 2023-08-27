@@ -47,6 +47,32 @@ class Subject {
             }
         }
     }
+    
+    static async delete(id) {
+        try {
+            const subject = await SubjectModel.destroy({
+                where: {
+                    id: id
+                }
+            });
+            if (subject != 0) {
+                return {
+                    data: "deleted",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
