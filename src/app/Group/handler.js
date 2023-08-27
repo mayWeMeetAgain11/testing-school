@@ -10,4 +10,11 @@ module.exports = {
         });
     },
 
+    updateGroup: async (req, res) => {
+        const result = await new Group(req.body).update(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
