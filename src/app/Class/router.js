@@ -7,6 +7,6 @@ const isAuth = require('../../../utils/auth/jwtMiddleware');
 
 router.post('/add', isAuth, addClass);
 
-router.put('/update', isAuth, updateClass);
+router.put('/update/:id', isAuth, updateClass);
 
 module.exports = router;

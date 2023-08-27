@@ -11,7 +11,7 @@ module.exports = {
     },
 
     updateClass: async (req, res) => {
-        const result = await new Class(req.body).update(req.user.id);
+        const result = await new Class(req.body).update(req.params.id);
         res.status(result.status).send({
             data: result.data,
         });
