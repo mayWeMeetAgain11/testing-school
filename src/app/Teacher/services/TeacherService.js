@@ -1,5 +1,5 @@
-const { TeacherModel} = require('../index');
-const httpStatus = require('../../../utils/httpStatus');
+const { TeacherModel} = require('../../index');
+const httpStatus = require('../../../../utils/httpStatus');
 
 class Teacher {
 
