@@ -1,5 +1,6 @@
 const { Teacher,  } = require('./services/TeacherService');
 const { TeacherSubject,  } = require('./services/TeacherSubjectService');
+const { TeacherNote,  } = require('./services/TeacherNoteService');
 const { Factory,  } = require('./services/helper/factory');
 const httpStatus = require('../../../utils/httpStatus');
 const {database} = require('../index');
@@ -9,6 +10,15 @@ module.exports = {
 
     addTeacher: async (req, res) => {
         const result = await new Teacher(req.body).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    addTeacherNote: async (req, res) => {
+        let data = req.body;
+        data.teacher_id = req.user.id;
+        const result = await new TeacherNote(data).add();
         res.status(result.status).send({
             data: result.data,
         });

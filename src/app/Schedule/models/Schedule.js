@@ -1,6 +1,6 @@
 
 const { Model } = require('sequelize');
-const { day } = require('./enum.json')
+const { day } = require('./enum.json');
 
 module.exports = (sequelize, DataTypes) => {
     class ScheduleModel extends Model {
