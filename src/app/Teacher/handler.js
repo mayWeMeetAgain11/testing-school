@@ -1,5 +1,8 @@
 const { Teacher,  } = require('./services/TeacherService');
 const { TeacherSubject,  } = require('./services/TeacherSubjectService');
+const { Factory,  } = require('./services/helper/factory');
+const httpStatus = require('../../../utils/httpStatus');
+const {database} = require('../index');
 
 
 module.exports = {
@@ -32,6 +35,34 @@ module.exports = {
         res.status(result.status).send({
             data: result.data,
         });
+    },
+
+    relateAllGroupOfSubjectsToTeacher: async (req, res) => {
+        try {
+            const {teacher_id} = req.params;
+            let {subject_ids} = req.body;
+            const result = await database.transaction(async (transaction) => {
+                console.log("1");
+                const deletedSubjects = await TeacherSubject.deleteAllForOneTeacher(teacher_id, { transaction });
+                console.log("2");
+                const factoriedData = Factory.relateAllObjectsWithOneProperty(subject_ids, teacher_id);
+                console.log("3");
+                console.log(factoriedData);
+                const addedSubjects = await TeacherSubject.relateAllGroupOfSubjects(factoriedData, { transaction });
+                console.log("4");
+                // await transaction.commit();
+                return addedSubjects;
+            });
+            res.status(result.status).send({
+                data: result.data,
+            });
+            // console.log(result);
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
     },
 
     unRelateTeacherWithOneSubject: async (req, res) => {
