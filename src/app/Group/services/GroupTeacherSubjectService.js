@@ -52,6 +52,47 @@ class GroupTeacherSubject {
         }
     }
 
+    static async deleteAllForOneGroup(group_id) {
+        try {
+            const groupTeacherSubjects = await GroupTeacherSubjectModel.destroy({
+                where: {
+                    group_id: group_id,
+                }
+            });
+            if (groupTeacherSubjects != 0) {
+                return {
+                    data: 'deleted',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async relateAllGroupOfTeacherSubjects(data) {
+        try {
+            const groupTeacherSubjects = await GroupTeacherSubjectModel.bulkCreate(data);
+            return {
+                data: 'all subjects related successfully',
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { GroupTeacherSubject };
