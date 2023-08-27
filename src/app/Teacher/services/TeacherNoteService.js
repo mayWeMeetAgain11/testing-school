@@ -49,6 +49,32 @@ class TeacherNote {
         }
     }
 
+    async update(note_id) {
+        try {
+            const updatedNote = await TeacherNoteModel.update( this, {
+                where: {
+                    id: note_id,
+                }
+            });
+            if (updatedNote == 1) {
+                return {
+                    data: 'updated',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { TeacherNote };

@@ -39,6 +39,16 @@ module.exports = {
         });
     },
     
+    updateTeacherNote: async (req, res) => {
+        let { note_id } = req.params;
+        let data = req.body;
+        data.teacher_id = req.user.id;
+        const result = await new TeacherNote(data).update(note_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+    
     deleteTeacher: async (req, res) => {
         const result = await Teacher.delete(req.params.id);
         res.status(result.status).send({
