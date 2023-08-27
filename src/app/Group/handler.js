@@ -65,4 +65,11 @@ module.exports = {
         }
     },
 
+    deleteGroup: async (req, res) => {
+        const result = await Group.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

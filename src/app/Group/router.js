@@ -4,6 +4,7 @@ const {
     addTeacherSubjectToGroup,
     unRelateGroupWithOneTeacherSubject,
     relateAllGroupOfTeacherSubjectsToGroup,
+    deleteGroup,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -11,6 +12,8 @@ const isAuth = require('../../../utils/auth/jwtMiddleware');
 router.post('/add', isAuth, addGroup);
 
 router.put('/update/:id', isAuth, updateGroup);
+
+router.delete('/delete/:id', isAuth, deleteGroup);
 
 router.post('/teacher-subject/add-one', isAuth, addTeacherSubjectToGroup);
 
