@@ -87,6 +87,32 @@ class Student {
             }
         }
     }
+    
+    static async delete(id) {
+        try {
+            const student = await StudentModel.destroy({
+                where: {
+                    id: id
+                }
+            });
+            if (student != 0) {
+                return {
+                    data: "deleted",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 

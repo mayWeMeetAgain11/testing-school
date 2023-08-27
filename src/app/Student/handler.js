@@ -25,4 +25,12 @@ module.exports = {
         });
     },
 
+    deleteStudent: async (req, res) => {
+        console.log(req.user.id);
+        const result = await Student.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
