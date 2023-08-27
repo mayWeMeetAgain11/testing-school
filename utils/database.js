@@ -10,11 +10,7 @@ const sequelize = new Sequelize(process.env.DBNAME, process.env.DBUSER, process.
 });
 
 sequelize
-  .authenticate(
-    {
-
-    }
-  )
+  .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
   })

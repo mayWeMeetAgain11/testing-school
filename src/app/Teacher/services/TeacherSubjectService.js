@@ -46,7 +46,7 @@ class TeacherSubject {
                     subject_id: data.subject_id
                 }
             });
-            if (teacherSubject == 1) {
+            if (teacherSubject != 0) {
                 return {
                     data: 'deleted',
                     status: httpStatus.OK
@@ -72,7 +72,7 @@ class TeacherSubject {
                     teacher_id: teacher_id,
                 }
             });
-            if (teacherSubject == 1) {
+            if (teacherSubject != 0) {
                 return {
                     data: 'deleted',
                     status: httpStatus.OK

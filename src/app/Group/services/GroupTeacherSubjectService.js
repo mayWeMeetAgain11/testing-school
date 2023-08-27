@@ -23,6 +23,35 @@ class GroupTeacherSubject {
         }
     }
 
+    
+    static async delete(data) {
+        try {
+            const groupTeacherSubject = await GroupTeacherSubjectModel.destroy({
+                where: {
+                    group_id: data.group_id,
+                    teacher_subject_id: data.teacher_subject_id
+                }
+            });
+            console.log(groupTeacherSubject);
+            if (groupTeacherSubject != 0) {
+                return {
+                    data: 'deleted',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { GroupTeacherSubject };

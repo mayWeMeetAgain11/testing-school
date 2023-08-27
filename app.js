@@ -25,7 +25,7 @@ app.use('/houdix/school/subjects', require('./src/app/Subject/router'));
 app.use('/houdix/school/teachers', require('./src/app/Teacher/router'));
 
 app.listen({ port: process.env.PORT }, async () => {
-    // await database.sync();
+    // await database.sync({alter: true, force: true});
     console.log('starting on port : ' + process.env.PORT);
 });
 

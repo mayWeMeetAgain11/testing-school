@@ -25,4 +25,14 @@ module.exports = {
         });
     },
 
+    unRelateGroupWithOneTeacherSubject: async (req, res) => {
+        const {teacher_subject_id} = req.params;
+        let data = req.body;
+        data.teacher_subject_id = teacher_subject_id;
+        const result = await GroupTeacherSubject.delete(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
