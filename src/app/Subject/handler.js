@@ -9,5 +9,12 @@ module.exports = {
             data: result.data,
         });
     },
+    
+    updateSubject: async (req, res) => {
+        const result = await new Subject(req.body).update(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
 }

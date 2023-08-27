@@ -21,6 +21,32 @@ class Subject {
             }
         }
     }
+            
+    async update(id) {
+        try {
+            const subject = await SubjectModel.update(this, {
+                where: {
+                    id: id
+                }
+            });
+            if (subject == 1) {
+                return {
+                    data: "updated",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
