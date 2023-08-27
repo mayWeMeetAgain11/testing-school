@@ -17,5 +17,12 @@ module.exports = {
             data: result.data,
         });
     },
+    
+    updateStudent: async (req, res) => {
+        const result = await new Student(req.body).update(req.user.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
 }
