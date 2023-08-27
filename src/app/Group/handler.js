@@ -1,4 +1,5 @@
-const { Group } = require('./service');
+const { Group } = require('./services/GroupService');
+const { GroupTeacherSubject } = require('./services/GroupTeacherSubjectService');
 
 
 module.exports = {
@@ -12,6 +13,13 @@ module.exports = {
 
     updateGroup: async (req, res) => {
         const result = await new Group(req.body).update(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    addTeacherSubjectToGroup: async (req, res) => {
+        const result = await new GroupTeacherSubject(req.body).add();
         res.status(result.status).send({
             data: result.data,
         });

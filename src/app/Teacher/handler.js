@@ -56,7 +56,6 @@ module.exports = {
             res.status(result.status).send({
                 data: result.data,
             });
-            // console.log(result);
         } catch (error) {
             return {
                 data: error.message,

@@ -12,7 +12,7 @@ class TeacherSubject {
         try {
             const teacherSubject = await TeacherSubjectModel.create(this);
             return {
-                data: teacherSubject,
+                data: 'related successfully',
                 status: httpStatus.OK
             };
         } catch (error) {
