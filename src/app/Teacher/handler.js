@@ -45,6 +45,13 @@ module.exports = {
             data: result.data,
         });
     },
+    
+    deleteNote: async (req, res) => {
+        const result = await TeacherNote.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
     addSubjectToTeacher: async (req, res) => {
         let data = req.body;
