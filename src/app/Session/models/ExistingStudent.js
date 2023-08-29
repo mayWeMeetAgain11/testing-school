@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     ExistingStudentModel.init({
-        date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
+
     }, {
         sequelize,
         modelName: 'ExistingStudentModel',
