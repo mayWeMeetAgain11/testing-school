@@ -24,6 +24,7 @@ app.use('/houdix/school/students', require('./src/app/Student/router'));
 app.use('/houdix/school/subjects', require('./src/app/Subject/router'));
 app.use('/houdix/school/teachers', require('./src/app/Teacher/router'));
 app.use('/houdix/school/sessions', require('./src/app/Session/router'));
+app.use('/houdix/school/assignments', require('./src/app/Assignment/router'));
 
 app.listen({ port: process.env.PORT }, async () => {
     // await database.sync({
