@@ -23,6 +23,21 @@ class TeacherNoteStudent {
         }
     }
 
+    static async relateAllGroupOfStudents(data) {
+        try {
+            const teacherNoteStudents = await TeacherNoteStudentModel.bulkCreate(data);
+            return {
+                data: 'related successfully',
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
     static async delete(data) {
         try {
             const deletedRecord = await TeacherNoteStudentModel.destroy({
@@ -32,6 +47,32 @@ class TeacherNoteStudent {
                 }
             });
             if (deletedRecord != 0) {
+                return {
+                    data: 'deleted',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async deleteAllForOneTeacherNote(teacher_note_id) {
+        try {
+            const teacherNoteStudents = await TeacherNoteStudentModel.destroy({
+                where: {
+                    teacher_note_id: teacher_note_id,
+                }
+            });
+            if (teacherNoteStudents != 0) {
                 return {
                     data: 'deleted',
                     status: httpStatus.OK

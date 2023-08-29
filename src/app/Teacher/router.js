@@ -32,7 +32,7 @@ router.delete('/notes/delete/:id', deleteNote);
 
 router.post('/notes/students/add-one/:id', relateNoteWithStudent);
 
-// router.post('/notes/students/add-all/:id', relateNoteWithAllStudentsGroup);
+router.post('/notes/students/add-all/:id', relateNoteWithAllStudentsGroup);
 
 router.delete('/notes/students/delete-one/:id',unRelateNoteWithOneStudent);
 
