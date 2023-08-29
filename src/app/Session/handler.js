@@ -1,7 +1,8 @@
 const { Session } = require('./services/SessionService');
 const { ExistingStudent } = require('./services/ExistingStudentService');
 const httpStatus = require('../../../utils/httpStatus');
-const {database} = require('../index');
+const { Factory } = require('../Teacher/services/helper/factory');
+const { database } = require('../index');
 
 
 module.exports = {
@@ -44,6 +45,31 @@ module.exports = {
         res.status(result.status).send({
             data: result.data,
         });
+    },
+
+    relateSessionWithAllStudents: async (req, res) => {
+        try {
+            const { session_id } = req.params;
+            let { student_ids } = req.body;
+            const result = await database.transaction(async (t) => {
+                console.log("1");
+                const deletedExistingStudents = await ExistingStudent.deleteAllForOneSession(session_id, { transaction: t });
+                console.log("2");
+                const factoriedData = Factory.relateAllStudentsWithOneSession(student_ids, session_id);
+                console.log("3");
+                const existingStudents = await ExistingStudent.relateAllGroupOfStudents(factoriedData, { transaction: t });
+                console.log("4");
+                return existingStudents;
+            });
+            res.status(result.status).send({
+                data: result.data,
+            });
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
     },
 
 }
