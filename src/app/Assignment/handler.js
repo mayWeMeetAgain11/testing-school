@@ -10,4 +10,13 @@ module.exports = {
         });
     },
 
+    updateAssignment: async (req, res) => {
+        let data = req.body;
+        data.assignment_id = req.params.assignment_id;
+        const result = await Assignment.update(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
