@@ -1,4 +1,4 @@
-const { ClassModel} = require('../index');
+const { ClassModel, GroupModel} = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
 class Class {
@@ -66,6 +66,28 @@ class Class {
                     status: httpStatus.BAD_REQUEST
                 };
             }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async getAll() {
+        try {
+            const classes = await ClassModel.findAll({
+                include: [
+                    {
+                        model: GroupModel,
+                        as:'groups'
+                    }
+                ]
+            });
+            return {
+                data: classes,
+                status: httpStatus.OK
+            };
         } catch (error) {
             return {
                 data: error.message,

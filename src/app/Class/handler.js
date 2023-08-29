@@ -24,4 +24,11 @@ module.exports = {
         });
     },
 
+    getAllClasses: async (req, res) => {
+        const result = await Class.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             this.hasMany(models.GroupModel, {
                 foreignKey: 'class_id',
-                as: 'group'
+                as: 'groups'
             }); 
         }
     }

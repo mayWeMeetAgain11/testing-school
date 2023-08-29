@@ -11,6 +11,7 @@ const {
     updateTeacherNote,
     relateNoteWithStudent,
     unRelateNoteWithOneStudent,
+    relateNoteWithAllStudentsGroup,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');

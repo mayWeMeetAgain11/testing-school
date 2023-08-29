@@ -127,4 +127,30 @@ module.exports = {
         });
     },
 
+    // relateAllGroupOfSubjectsToTeacher: async (req, res) => {
+    //     try {
+    //         const { teacher_note_id } = req.params;
+    //         let { student_ids } = req.body;
+    //         const result = await database.transaction(async (t) => {
+    //             console.log("1");
+    //             const deletedSubjects = await TeacherNoteStudent.deleteAllForOneTeacher(teacher_note_id, { transaction: t });
+    //             console.log("2");
+    //             const factoriedData = Factory.relateAllObjectsWithOneProperty(student_ids, teacher_note_id);
+    //             console.log("3");
+    //             const addedStudents = await TeacherNoteStudent.relateAllGroupOfSubjects(factoriedData, { transaction: t });
+    //             console.log("4");
+    //             // await transaction.commit();
+    //             return addedStudents;
+    //         });
+    //         res.status(result.status).send({
+    //             data: result.data,
+    //         });
+    //     } catch (error) {
+    //         return {
+    //             data: error.message,
+    //             status: httpStatus.BAD_REQUEST
+    //         }
+    //     }
+    // },
+
 }
