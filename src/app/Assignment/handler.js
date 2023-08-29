@@ -19,4 +19,12 @@ module.exports = {
         });
     },
 
+    deleteAssignment: async (req, res) => {
+        const assignment_id = req.params.assignment_id;
+        const result = await Assignment.delete(assignment_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

@@ -43,6 +43,32 @@ class Assignment {
             }
         }
     }
+    
+    static async delete(id) {
+        try {
+            const assignment = await AssignmentModel.destroy({
+                where: {
+                    id: id
+                }
+            });
+            if (assignment != 0) {
+                return {
+                    data: "deleted",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
