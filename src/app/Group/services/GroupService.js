@@ -74,6 +74,47 @@ class Group {
             }
         }
     }
+        
+    static async getAll() {
+        try {
+            const groups = await GroupModel.findAll({
+                include: [
+                    {
+                        model: ClassModel,
+                        as:'class'
+                    }
+                ]
+            });
+            return {
+                data: groups,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+        
+    static async getAllByClassId(id) {
+        try {
+            const groups = await GroupModel.findAll({
+                where: {
+                    class_id: id
+                }
+            });
+            return {
+                data: groups,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 

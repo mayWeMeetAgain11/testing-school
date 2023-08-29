@@ -72,4 +72,18 @@ module.exports = {
         });
     },
 
+    getAllGroups: async (req, res) => {
+        const result = await Group.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllGroupsForOneClass: async (req, res) => {
+        const result = await Group.getAllByClassId(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
