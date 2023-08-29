@@ -145,6 +145,25 @@ class Student {
             }
         }
     }
+    
+    static async getAllForOneGroup(group_id) {
+        try {
+            const students = await StudentModel.findAll({
+                where: {
+                    group_id: group_id
+                }
+            });
+            return {
+                data: students,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
