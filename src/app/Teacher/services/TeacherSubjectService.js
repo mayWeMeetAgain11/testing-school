@@ -1,4 +1,11 @@
-const { TeacherSubjectModel} = require('../../index');
+const { 
+    TeacherSubjectModel, 
+    TeacherModel,
+    SubjectModel,
+    GroupTeacherSubjectModel,
+    GroupModel,
+    StudentModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class TeacherSubject {
@@ -83,6 +90,56 @@ class TeacherSubject {
                     status: httpStatus.BAD_REQUEST
                 };
             }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllTeacherSubjectsForOneStudent(student_id) {
+        try {
+            const teacherSubjects = await TeacherSubjectModel.findAll({
+                include: [
+                    {
+                        model: TeacherModel,
+                        as: 'teacher'
+                    },
+                    {
+                        model: SubjectModel,
+                        as: 'subject'
+                    },
+                    {
+                        attributes: [],
+                        required: true,
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subjects',
+                        include: [
+                            {
+                                attributes: [],
+                                model: GroupModel,
+                                as: 'group',
+                                include: [
+                                    {
+                                        attributes: [],
+                                        required: true,
+                                        model: StudentModel,
+                                        as: 'students',
+                                        where: {
+                                            id: student_id
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                ],
+            });
+            return {
+                data: teacherSubjects,
+                status: httpStatus.OK
+            };
         } catch (error) {
             return {
                 data: error.message,

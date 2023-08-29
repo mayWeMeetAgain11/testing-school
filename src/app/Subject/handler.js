@@ -1,4 +1,5 @@
 const { Subject } = require('./service');
+const { TeacherSubject } = require('../Teacher/services/TeacherSubjectService');
 
 
 module.exports = {
@@ -19,6 +20,13 @@ module.exports = {
 
     deleteSubject: async (req, res) => {
         const result = await Subject.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllTeacherSubjectsForOneStudent: async (req, res) => {
+        const result = await TeacherSubject.getAllTeacherSubjectsForOneStudent(req.params.student_id);
         res.status(result.status).send({
             data: result.data,
         });
