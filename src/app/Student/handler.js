@@ -33,6 +33,13 @@ module.exports = {
         });
     },
 
+    getAllStudents: async (req, res) => {
+        const result = await Student.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     linkStudentToNewGroup: async (req, res) => {
         const data = req.body;
         const result = await Student.linkToGroup(req.params.id, data);

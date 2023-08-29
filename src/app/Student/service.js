@@ -130,6 +130,21 @@ class Student {
             }
         }
     }
+    
+    static async getAll() {
+        try {
+            const students = await StudentModel.findAll({});
+            return {
+                data: students,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
