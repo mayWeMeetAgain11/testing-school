@@ -50,6 +50,25 @@ class Session {
         }
     }
 
+    static async update(data) {
+        try {
+            const session = await SessionModel.findByPk(data.session_id);
+            session.date = data.date || session.date;
+            session.group_teacher_subject_id = data.group_teacher_subject_id || session.group_teacher_subject_id;
+            session.save();
+            return {
+                data: 'updated successfully',
+                status: httpStatus.OK
+            };
+
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { Session };

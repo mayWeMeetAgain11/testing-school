@@ -20,6 +20,15 @@ module.exports = {
         });
     },
 
+    updateSession: async (req, res) => {
+        let data = req.body;
+        data.session_id = req.params.session_id;
+        const result = await Session.update(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     relateSessionWithStudent: async (req, res) => {
         let data = req.body;
         data.session_id = req.params.session_id;
