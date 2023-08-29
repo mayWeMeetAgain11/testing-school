@@ -33,7 +33,7 @@ module.exports = {
         });
     },
 
-    getAllStudents: async (req, res) => {
+    getAllStudentsWithGroups: async (req, res) => {
         const result = await Student.getAll();
         res.status(result.status).send({
             data: result.data,

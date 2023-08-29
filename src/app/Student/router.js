@@ -4,7 +4,7 @@ const {
     updateStudent,
     deleteStudent,
     linkStudentToNewGroup,
-    getAllStudents,
+    getAllStudentsWithGroups,
     getAllStudentsForOneGroup,
 } = require('./handler');
 const router = require('express').Router();
@@ -14,7 +14,7 @@ router.post('/register', isAuth, addStudent);
 
 router.post('/login', studentLogin);
 
-router.get('/get-all', getAllStudents);
+router.get('/get-all', getAllStudentsWithGroups);
 
 router.get('/group/get-all/:group_id', getAllStudentsForOneGroup);
 

@@ -1,4 +1,4 @@
-const { StudentModel} = require('../index');
+const { StudentModel, GroupModel } = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
 class Student {
@@ -133,7 +133,14 @@ class Student {
     
     static async getAll() {
         try {
-            const students = await StudentModel.findAll({});
+            const students = await StudentModel.findAll({
+                include: [
+                    {
+                        model: GroupModel,
+                        as: 'group'
+                    }
+                ]
+            });
             return {
                 data: students,
                 status: httpStatus.OK
