@@ -13,6 +13,13 @@ module.exports = {
         });
     },
 
+    deleteSession: async (req, res) => {
+        const result = await Session.delete(req.params.session_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     relateSessionWithStudent: async (req, res) => {
         let data = req.body;
         data.session_id = req.params.session_id;

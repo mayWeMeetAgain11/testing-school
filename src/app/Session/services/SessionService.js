@@ -23,6 +23,33 @@ class Session {
         }
     }
 
+    static async delete(session_id) {
+        try {
+            const deletedSession = await SessionModel.destroy({
+                where: {
+                    id: session_id
+                }
+            });
+            if (deletedSession == 1) {
+                return {
+                    data: 'deleted successfully',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something wrong happend',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { Session };
