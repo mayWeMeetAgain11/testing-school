@@ -32,4 +32,11 @@ module.exports = {
         });
     },
 
+    getAllTeacherSubjectsForOnegroup: async (req, res) => {
+        const result = await TeacherSubject.getAllTeacherSubjectsForOneGroup(req.params.group_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

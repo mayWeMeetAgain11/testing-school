@@ -148,6 +148,48 @@ class TeacherSubject {
         }
     }
 
+    static async getAllTeacherSubjectsForOneGroup(group_id) {
+        try {
+            const teacherSubjects = await TeacherSubjectModel.findAll({
+                include: [
+                    {
+                        model: TeacherModel,
+                        as: 'teacher'
+                    },
+                    {
+                        model: SubjectModel,
+                        as: 'subject'
+                    },
+                    {
+                        attributes: [],
+                        required: true,
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subjects',
+                        include: [
+                            {
+                                attributes: [],
+                                model: GroupModel,
+                                as: 'group',
+                                where: {
+                                    id: group_id
+                                }
+                            }
+                        ]
+                    },
+                ],
+            });
+            return {
+                data: teacherSubjects,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { TeacherSubject };
