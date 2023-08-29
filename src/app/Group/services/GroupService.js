@@ -1,4 +1,4 @@
-const { GroupModel} = require('../../index');
+const { GroupModel, ClassModel} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class Group {
