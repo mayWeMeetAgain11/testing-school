@@ -29,7 +29,7 @@ app.listen({ port: process.env.PORT }, async () => {
     // await database.sync({
     //     alter: true,
     //     // force: true
-    // });
+    // }); 
     console.log('starting on port : ' + process.env.PORT);
 });
 
