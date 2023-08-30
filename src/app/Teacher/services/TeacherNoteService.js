@@ -3,6 +3,8 @@ const {
     TeacherModel,
     TeacherSubjectModel,
     TeacherNoteStudentModel,
+    GroupTeacherSubjectModel,
+    StudentModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
@@ -102,6 +104,50 @@ class TeacherNote {
                         where: {
                             student_id: student_id
                         }
+                    },
+                ]
+            });
+            return {
+                data: teacherNotes,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneGroup(group_id) {
+        try {
+            const teacherNotes = await TeacherNoteModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: TeacherModel,
+                        as: 'teacher',
+                        include: [
+                            {
+                                required: true,
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subjects',
+                            }
+                        ]
+                    },
+                    {
+                        required: true,
+                        model: TeacherNoteStudentModel,
+                        as: 'teacher_note_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student',
+                                where: {
+                                    group_id: group_id
+                                }
+                            }
+                        ]
                     },
                 ]
             });
