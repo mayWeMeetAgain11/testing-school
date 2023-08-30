@@ -47,6 +47,13 @@ module.exports = {
         });
     },
 
+    getAllNotesForManyStudents: async (req, res) => {
+        const result = await Student.getAllNotesForManyStudent(req.body.student_ids);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     linkStudentToNewGroup: async (req, res) => {
         const data = req.body;
         const result = await Student.linkToGroup(req.params.id, data);

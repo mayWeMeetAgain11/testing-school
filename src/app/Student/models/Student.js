@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'student_id',
                 as: 'existing_students'
             }); 
+            this.hasMany(models.TeacherNoteStudentModel, {
+                foreignKey: 'student_id',
+                as: 'teacher_note_students'
+            }); 
         }
     }
     StudentModel.init({

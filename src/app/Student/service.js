@@ -1,5 +1,14 @@
-const { StudentModel, GroupModel } = require('../index');
+const { 
+    StudentModel, 
+    GroupModel, 
+    TeacherNoteStudentModel,
+    TeacherNoteModel,
+    TeacherModel,
+    TeacherSubjectModel,
+    SubjectModel,
+} = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
+const { Op } = require('sequelize');
 
 class Student {
 
@@ -138,6 +147,57 @@ class Student {
                     {
                         model: GroupModel,
                         as: 'group'
+                    }
+                ]
+            });
+            return {
+                data: students,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async getAllNotesForManyStudent(student_ids) {
+        try {
+            const students = await StudentModel.findAll({
+                where: {
+                    id: {
+                        [Op.in]: student_ids
+                    }
+                },
+                include: [
+                    {
+                        model: TeacherNoteStudentModel,
+                        as: 'teacher_note_students',
+                        include: [
+                            {
+                                model: TeacherNoteModel,
+                                as: 'teacher_note',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                        include: [
+                                            {
+                                                model: TeacherSubjectModel,
+                                                as: 'teacher_subjects',
+                                                include: [
+                                                    {
+                                                        model: SubjectModel,
+                                                        as: 'subject'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             });

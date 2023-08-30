@@ -6,6 +6,7 @@ const {
     linkStudentToNewGroup,
     getAllStudentsWithGroups,
     getAllStudentsForOneGroup,
+    getAllNotesForManyStudents,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -17,6 +18,8 @@ router.post('/login', studentLogin);
 router.get('/get-all', getAllStudentsWithGroups);
 
 router.get('/group/get-all/:group_id', getAllStudentsForOneGroup);
+
+router.get('/notes/get-all', getAllNotesForManyStudents);
 
 router.use(isAuth);
 
