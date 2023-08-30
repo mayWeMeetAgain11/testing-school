@@ -5,6 +5,7 @@ const {
     TeacherNoteStudentModel,
     GroupModel,
     StudentModel,
+    SubjectModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
@@ -92,7 +93,13 @@ class TeacherNote {
                         include: [
                             {
                                 model: TeacherSubjectModel,
-                                as: 'teacher_subjects'
+                                as: 'teacher_subjects',
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -132,6 +139,12 @@ class TeacherNote {
                                 required: true,
                                 model: TeacherSubjectModel,
                                 as: 'teacher_subjects',
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -176,6 +189,12 @@ class TeacherNote {
                                 required: true,
                                 model: TeacherSubjectModel,
                                 as: 'teacher_subjects',
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    }
+                                ]
                             }
                         ]
                     },
