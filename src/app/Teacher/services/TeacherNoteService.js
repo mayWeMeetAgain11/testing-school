@@ -3,7 +3,7 @@ const {
     TeacherModel,
     TeacherSubjectModel,
     TeacherNoteStudentModel,
-    GroupTeacherSubjectModel,
+    GroupModel,
     StudentModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
@@ -146,6 +146,58 @@ class TeacherNote {
                                 where: {
                                     group_id: group_id
                                 }
+                            }
+                        ]
+                    },
+                ]
+            });
+            return {
+                data: teacherNotes,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneClass(class_id) {
+        try {
+            const teacherNotes = await TeacherNoteModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: TeacherModel,
+                        as: 'teacher',
+                        include: [
+                            {
+                                required: true,
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subjects',
+                            }
+                        ]
+                    },
+                    {
+                        required: true,
+                        model: TeacherNoteStudentModel,
+                        as: 'teacher_note_students',
+                        include: [
+                            {
+                                required: true,
+                                model: StudentModel,
+                                as: 'student',
+                                include: [
+                                    {
+                                        required: true,
+                                        model: GroupModel,
+                                        as: 'group',
+                                        where: {
+                                            class_id: class_id
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     },

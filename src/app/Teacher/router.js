@@ -14,6 +14,7 @@ const {
     relateNoteWithAllStudentsGroup,
     getAllTeahcherNotesForOneStudent,
     getAllTeahcherNotesForOneGroup,
+    getAllTeahcherNotesForOneClass,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -41,6 +42,8 @@ router.delete('/notes/students/delete-one/:id',unRelateNoteWithOneStudent);
 router.get('/notes/students/get-all/:student_id',getAllTeahcherNotesForOneStudent);
 
 router.get('/notes/groups/get-all/:group_id',getAllTeahcherNotesForOneGroup);
+
+router.get('/notes/classes/get-all/:class_id',getAllTeahcherNotesForOneClass);
 
 router.post('/subjects/add-one', addSubjectToTeacher);
 
