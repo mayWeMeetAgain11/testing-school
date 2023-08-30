@@ -127,6 +127,14 @@ module.exports = {
         });
     },
 
+    getAllTeahcherNotesForOneStudent: async (req, res) => {
+        const {student_id} = req.params;
+        const result = await TeacherNote.getAllForOneStudent(student_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     relateNoteWithAllStudentsGroup: async (req, res) => {
         try {
             const teacher_note_id = req.params.id;

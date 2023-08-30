@@ -1,4 +1,9 @@
-const { TeacherNoteModel} = require('../../index');
+const { 
+    TeacherNoteModel, 
+    TeacherModel,
+    TeacherSubjectModel,
+    TeacherNoteStudentModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class TeacherNote {
@@ -67,6 +72,43 @@ class TeacherNote {
                     status: httpStatus.BAD_REQUEST
                 };
             }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneStudent(student_id) {
+        try {
+            const teacherNotes = await TeacherNoteModel.findAll({
+                include: [
+                    {
+                        model: TeacherModel,
+                        as: 'teacher',
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subjects'
+                            }
+                        ]
+                    },
+                    {
+                        attributes: [],
+                        required: true,
+                        model: TeacherNoteStudentModel,
+                        as: 'teacher_note_students',
+                        where: {
+                            student_id: student_id
+                        }
+                    },
+                ]
+            });
+            return {
+                data: teacherNotes,
+                status: httpStatus.OK
+            };
         } catch (error) {
             return {
                 data: error.message,
