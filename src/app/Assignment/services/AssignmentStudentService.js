@@ -23,7 +23,33 @@ class AssignmentStudent {
             }
         }
     }
-
+    
+    static async delete(data) {
+        try {
+            const AssignmentStudent = await AssignmentStudentModel.destroy({
+                where: {
+                    assignment_id: assignment_id,
+                    student_id: student_id,
+                }
+            });
+            if (AssignmentStudent != 0) {
+                return {
+                    data: "deleted",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 }
 
 module.exports = { AssignmentStudent };

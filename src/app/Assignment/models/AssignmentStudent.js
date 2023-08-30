@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'assignment_id',
                 as: 'assignment'
             }); 
+            this.belongsTo(models.StudentModel, {
+                foreignKey: 'student_id',
+                as: 'student'
+            }); 
         }
     }
     AssignmentStudentModel.init({

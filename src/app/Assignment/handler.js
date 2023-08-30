@@ -18,6 +18,15 @@ module.exports = {
         });
     },
 
+    unRelateOneStudentWithAssignment: async (req, res) => {
+        let data = req.body;
+        data.student_id = req.params.student_id;
+        const result = await new AssignmentStudent.delete(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     updateAssignment: async (req, res) => {
         let data = req.body;
         data.assignment_id = req.params.assignment_id;
