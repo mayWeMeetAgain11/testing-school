@@ -21,6 +21,13 @@ module.exports = {
         });
     },
 
+    getAllSessionsWithInfoInDateRange: async (req, res) => {
+        const result = await Session.getAllInDateRange(req.body);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     deleteSession: async (req, res) => {
         const result = await Session.delete(req.params.session_id);
         res.status(result.status).send({

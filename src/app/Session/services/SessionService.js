@@ -10,6 +10,7 @@ const {
     SubjectModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
+const { Op } = require('sequelize');
 
 class Session {
 
@@ -36,6 +37,78 @@ class Session {
     static async getAll() {
         try {
             const session = await SessionModel.findAll({
+                include: [
+                    {
+                        model: ExistingStudentModel,
+                        as: 'existing_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student'
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: GroupModel,
+                                as: 'group',
+                                include: [
+                                    {
+                                        model: ClassModel,
+                                        as: 'class'
+                                    }
+                                ]
+                            },
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher'
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            });
+            return {
+                data: session,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllInDateRange(data) {
+        try {
+            let start, end;
+            if (data.date) {
+                start = new Date(data.date);
+                end = new Date(data.date);
+                end.setDate(end.getDate() + 1);
+            } else {
+                start = new Date(data.start);
+                end = new Date(data.end);
+            }
+            const session = await SessionModel.findAll({
+                where: {
+                    date: {
+                        [Op.between]: [start, end]
+                    }
+                },
                 include: [
                     {
                         model: ExistingStudentModel,
