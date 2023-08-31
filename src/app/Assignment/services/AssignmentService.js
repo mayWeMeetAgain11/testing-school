@@ -8,6 +8,7 @@ const {
     SubjectModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
+const { Op } = require('sequelize');
 
 class Assignment {
 
@@ -69,6 +70,63 @@ class Assignment {
                         ]
                     },
                 ]
+            });
+            return {
+                data: Assignment,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForFuture() {
+        try {
+            const date = new Date();
+            const Assignment = await AssignmentModel.findAll({
+                where: {
+                    date: {
+                        [Op.gte]: date
+                    }
+                },
+                include: [
+                    {
+                        model: AssignmentStudentModel,
+                        as: 'assignment_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student',
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                        
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                        
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                ],
+                order: ['date']
             });
             return {
                 data: Assignment,
