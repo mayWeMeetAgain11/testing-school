@@ -8,6 +8,7 @@ const {
     getAllSessionsWithInfo,
     getAllSessionsWithInfoInDateRange,
     getAllSessionsWithInfoForOneStudent,
+    getAllSessionsWithInfoInDateRangeForOneStudent,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -19,6 +20,8 @@ router.get('/get-all', getAllSessionsWithInfo);
 router.get('/get-all/:student_id', getAllSessionsWithInfoForOneStudent);
 
 router.get('/get-all-in-date-range', getAllSessionsWithInfoInDateRange);
+
+router.get('/get-all-in-date-range/:student_id', getAllSessionsWithInfoInDateRangeForOneStudent);
 
 router.delete('/delete/:session_id', deleteSession);
 

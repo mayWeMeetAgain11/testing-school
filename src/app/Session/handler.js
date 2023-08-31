@@ -35,6 +35,15 @@ module.exports = {
         });
     },
 
+    getAllSessionsWithInfoInDateRangeForOneStudent: async (req, res) => {
+        let data = req.body;
+        data.student_id = req.params.student_id;
+        const result = await Session.getAllInDateRangeForOneStudent(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     deleteSession: async (req, res) => {
         const result = await Session.delete(req.params.session_id);
         res.status(result.status).send({
