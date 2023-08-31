@@ -32,6 +32,13 @@ module.exports = {
             data: result.data,
         });
     },
+    
+    updateFeedback: async (req, res) => {
+        const result = await new Feedback(req.body).update(req.params.feedback_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
 
     deleteStudent: async (req, res) => {
         console.log(req.user.id);

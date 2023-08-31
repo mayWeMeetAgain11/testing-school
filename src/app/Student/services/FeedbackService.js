@@ -24,6 +24,32 @@ class Feedback {
             }
         }
     }
+    
+    async update(id) {
+        try {
+            const feedback = await FeedbackModel.update(this, {
+                where: {
+                    id: id
+                }
+            });
+            if (feedback == 1) {
+                return {
+                    data: "updated",
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: "something went wrong!",
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
 
 }
 
