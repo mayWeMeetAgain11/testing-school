@@ -6,6 +6,7 @@ const {
     unRelateOneStudentWithAssignment,
     getAllAssignmentsWithItsInfo,
     getAllFutureAssignmentsWithItsInfo,
+    getAllPassedAssignmentsWithItsInfo,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -21,6 +22,8 @@ router.delete('/delete/:assignment_id', deleteAssignment);
 router.get('/get-all', getAllAssignmentsWithItsInfo);
 
 router.get('/not-done-yet/get-all', getAllFutureAssignmentsWithItsInfo);
+
+router.get('/passed/get-all', getAllPassedAssignmentsWithItsInfo);
 
 router.delete('/students/delete-one/:assignment_id', unRelateOneStudentWithAssignment);
 
