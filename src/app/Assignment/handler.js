@@ -11,6 +11,13 @@ module.exports = {
         });
     },
 
+    getAllAssignmentsWithItsInfo: async (req, res) => {
+        const result = await Assignment.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     relateOneStudentWithAssignment: async (req, res) => {
         const result = await new AssignmentStudent(req.body).add();
         res.status(result.status).send({

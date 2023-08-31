@@ -1,4 +1,12 @@
-const { AssignmentModel} = require('../../index');
+const { 
+    AssignmentModel,
+    AssignmentStudentModel,
+    StudentModel,
+    GroupTeacherSubjectModel,
+    TeacherSubjectModel,
+    TeacherModel,
+    SubjectModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class Assignment {
@@ -12,6 +20,56 @@ class Assignment {
     async add() {
         try {
             const Assignment = await AssignmentModel.create(this);
+            return {
+                data: Assignment,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAll() {
+        try {
+            const Assignment = await AssignmentModel.findAll({
+                include: [
+                    {
+                        model: AssignmentStudentModel,
+                        as: 'assignment_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student',
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                        
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                        
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                ]
+            });
             return {
                 data: Assignment,
                 status: httpStatus.OK
