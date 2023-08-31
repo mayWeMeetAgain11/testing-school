@@ -5,11 +5,14 @@ const {
     deleteSession,
     updateSession,
     relateSessionWithAllStudents,
+    getAllSessionsWithInfo,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
 
 router.post('/add', addSession);
+
+router.get('/get-all', getAllSessionsWithInfo);
 
 router.delete('/delete/:session_id', deleteSession);
 

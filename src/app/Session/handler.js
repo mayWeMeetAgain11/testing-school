@@ -14,6 +14,13 @@ module.exports = {
         });
     },
 
+    getAllSessionsWithInfo: async (req, res) => {
+        const result = await Session.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     deleteSession: async (req, res) => {
         const result = await Session.delete(req.params.session_id);
         res.status(result.status).send({

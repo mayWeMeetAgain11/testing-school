@@ -1,4 +1,14 @@
-const { SessionModel} = require('../../index');
+const { 
+    SessionModel, 
+    ExistingStudentModel,
+    StudentModel,
+    GroupTeacherSubjectModel,
+    GroupModel,
+    ClassModel,
+    TeacherSubjectModel,
+    TeacherModel,
+    SubjectModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class Session {
@@ -11,6 +21,64 @@ class Session {
     async add() {
         try {
             const session = await SessionModel.create(this);
+            return {
+                data: session,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAll() {
+        try {
+            const session = await SessionModel.findAll({
+                include: [
+                    {
+                        model: ExistingStudentModel,
+                        as: 'existing_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student'
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: GroupModel,
+                                as: 'group',
+                                include: [
+                                    {
+                                        model: ClassModel,
+                                        as: 'class'
+                                    }
+                                ]
+                            },
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher'
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            });
             return {
                 data: session,
                 status: httpStatus.OK
