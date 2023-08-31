@@ -7,6 +7,7 @@ const {
     relateSessionWithAllStudents,
     getAllSessionsWithInfo,
     getAllSessionsWithInfoInDateRange,
+    getAllSessionsWithInfoForOneStudent,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -14,6 +15,8 @@ const isAuth = require('../../../utils/auth/jwtMiddleware');
 router.post('/add', addSession);
 
 router.get('/get-all', getAllSessionsWithInfo);
+
+router.get('/get-all/:student_id', getAllSessionsWithInfoForOneStudent);
 
 router.get('/get-all-in-date-range', getAllSessionsWithInfoInDateRange);
 

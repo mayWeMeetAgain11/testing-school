@@ -21,6 +21,13 @@ module.exports = {
         });
     },
 
+    getAllSessionsWithInfoForOneStudent: async (req, res) => {
+        const result = await Session.getAllForOneStudent(req.params.student_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     getAllSessionsWithInfoInDateRange: async (req, res) => {
         const result = await Session.getAllInDateRange(req.body);
         res.status(result.status).send({

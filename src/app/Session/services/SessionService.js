@@ -92,6 +92,68 @@ class Session {
         }
     }
 
+    static async getAllForOneStudent(student_id) {
+        try {
+            const session = await SessionModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        where: {
+                            student_id: student_id
+                        },
+                        model: ExistingStudentModel,
+                        as: 'existing_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student'
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: GroupModel,
+                                as: 'group',
+                                include: [
+                                    {
+                                        model: ClassModel,
+                                        as: 'class'
+                                    }
+                                ]
+                            },
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher'
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject'
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            });
+            return {
+                data: session,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
     static async getAllInDateRange(data) {
         try {
             let start, end;
