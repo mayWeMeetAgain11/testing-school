@@ -7,11 +7,14 @@ const {
     getAllStudentsWithGroups,
     getAllStudentsForOneGroup,
     getAllNotesForManyStudents,
+    addFeedback,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
 
 router.post('/register', isAuth, addStudent);
+
+router.post('/feedbacks/add', addFeedback);
 
 router.post('/login', studentLogin);
 

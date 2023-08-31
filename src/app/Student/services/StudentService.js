@@ -6,8 +6,8 @@ const {
     TeacherModel,
     TeacherSubjectModel,
     SubjectModel,
-} = require('../index');
-const httpStatus = require('../../../utils/httpStatus');
+} = require('../../index');
+const httpStatus = require('../../../../utils/httpStatus');
 const { Op } = require('sequelize');
 
 class Student {

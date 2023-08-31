@@ -1,10 +1,18 @@
-const { Student } = require('./service');
+const { Student } = require('./services/StudentService');
+const { Feedback } = require('./services/FeedbackService');
 
 
 module.exports = {
 
     addStudent: async (req, res) => {
         const result = await new Student(req.body).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    addFeedback: async (req, res) => {
+        const result = await new Feedback(req.body).add();
         res.status(result.status).send({
             data: result.data,
         });

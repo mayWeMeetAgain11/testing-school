@@ -5,7 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     class FeedbackModel extends Model {
 
         static associate(models) {
-
+            this.belongsTo(models.StudentModel, {
+                foreignKey: 'student_id',
+                as: 'student'
+            });
         }
     }
     FeedbackModel.init({
