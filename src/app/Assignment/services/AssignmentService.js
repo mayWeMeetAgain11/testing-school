@@ -69,7 +69,8 @@ class Assignment {
                             }
                         ]
                     },
-                ]
+                ],
+                order: ['date']
             });
             return {
                 data: Assignment,
