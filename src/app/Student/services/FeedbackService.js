@@ -1,5 +1,7 @@
 const { 
     FeedbackModel,
+    StudentModel,
+    GroupModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
@@ -13,6 +15,35 @@ class Feedback {
     async add() {
         try {
             const feedback = await FeedbackModel.create(this);
+            return {
+                data: feedback,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAll() {
+        try {
+            const feedback = await FeedbackModel.findAll({
+                include: [
+                    {
+                        model: StudentModel,
+                        as: 'student',
+                        include: [
+                            {
+                                model: GroupModel,
+                                as: 'group',
+                                
+                            }
+                        ]
+                    }
+                ]
+            });
             return {
                 data: feedback,
                 status: httpStatus.OK
