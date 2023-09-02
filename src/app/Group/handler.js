@@ -72,7 +72,7 @@ module.exports = {
         });
     },
 
-    getAllGroups: async (req, res) => {
+    getAllGroupsWithInfo: async (req, res) => {
         const result = await Group.getAll();
         res.status(result.status).send({
             data: result.data,

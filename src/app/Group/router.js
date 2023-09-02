@@ -5,7 +5,7 @@ const {
     unRelateGroupWithOneTeacherSubject,
     relateAllGroupOfTeacherSubjectsToGroup,
     deleteGroup,
-    getAllGroups,
+    getAllGroupsWithInfo,
     getAllGroupsForOneClass,
 } = require('./handler');
 const router = require('express').Router();
@@ -17,7 +17,7 @@ router.put('/update/:id', isAuth, updateGroup);
 
 router.delete('/delete/:id', isAuth, deleteGroup);
 
-router.get('/get-all', getAllGroups);
+router.get('/get-all', getAllGroupsWithInfo);
 
 router.get('/get-all/:id', getAllGroupsForOneClass);
 

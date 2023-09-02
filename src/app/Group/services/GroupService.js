@@ -1,4 +1,12 @@
-const { GroupModel, ClassModel} = require('../../index');
+const { 
+    GroupModel, 
+    ClassModel, 
+    StudentModel,
+    GroupTeacherSubjectModel,
+    TeacherSubjectModel,
+    TeacherModel,
+    SubjectModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class Group {
@@ -82,7 +90,31 @@ class Group {
                     {
                         model: ClassModel,
                         as:'class'
-                    }
+                    },
+                    {
+                        model: StudentModel,
+                        as:'students'
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as:'group_teacher_subjects',
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as:'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as:'teacher'
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as:'subject'
+                                    },
+                                ]
+                            },
+                        ]
+                    },
                 ]
             });
             return {
