@@ -40,12 +40,23 @@ module.exports = {
     relateManagerNoteWithManyGroups: async (req, res) => {
         const {manager_note_id} = req.params;
         const group_teacher_subject_ids = req.body.group_teacher_subject_ids;
-        console.log(group_teacher_subject_ids);
-        console.log(manager_note_id);
         const result = await database.transaction(async (t) => {
             const deletedSubjects = await ManagerNoteGroup.deleteAllForOneManagerNote(manager_note_id, { transaction: t });
-            console.log("2");
             const factoriedData = Factory.relateAllObjectsWithOneProperty(group_teacher_subject_ids, manager_note_id);
+            const finalResult = await ManagerNoteGroup.addAll(factoriedData, {transaction: t});
+            return finalResult;
+        });
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    addManagerNoteWithAllRelations: async (req, res) => {
+        const group_teacher_subject_ids = req.body.group_teacher_subject_ids;
+        const result = await database.transaction(async (t) => {
+            const managerNote = await new ManagerNote(req.body).add();
+            console.log(managerNote);
+            const factoriedData = Factory.relateAllObjectsWithOneProperty(group_teacher_subject_ids, managerNote.data.dataValues.id);
             // console.log(factoriedData);
             const finalResult = await ManagerNoteGroup.addAll(factoriedData, {transaction: t});
             // console.log(finalResult);

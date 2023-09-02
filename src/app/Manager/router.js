@@ -7,6 +7,7 @@ const {
     relateManagerNoteWithManyGroups,
     relateManagerNoteToOneGroup,
     unRelateManagerNoteToOneGroup,
+    addManagerNoteWithAllRelations,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -14,6 +15,8 @@ const isAuth = require('../../../utils/auth/jwtMiddleware');
 router.post('/register', addManager);
 
 router.post('/note/add', addManagerNote);
+
+router.post('/note/add-with-groups', addManagerNoteWithAllRelations);
 
 router.post('/note/relate-with-one-group', relateManagerNoteToOneGroup);
 
