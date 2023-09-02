@@ -1,5 +1,5 @@
-const { ManagerModel} = require('../index');
-const httpStatus = require('../../../utils/httpStatus');
+const { ManagerModel} = require('../../index');
+const httpStatus = require('../../../../utils/httpStatus');
 
 class Manager {
 

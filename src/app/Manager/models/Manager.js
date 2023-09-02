@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         static associate(models) {
-
+            this.hasMany(models.ManagerNoteModel, {
+                foreignKey: 'manager_id',
+                as: 'manager_notes'
+            }); 
         }
     }
     ManagerModel.init({
