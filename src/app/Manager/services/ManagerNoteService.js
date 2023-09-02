@@ -50,6 +50,25 @@ class ManagerNote {
         }
     }
 
+    static async getAllWithTypeCondition(type) {
+        try {
+            const managerNote = await ManagerNoteModel.findAll({
+                where: {
+                    type: type
+                }
+            });
+            return {
+                data: managerNote,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { ManagerNote };

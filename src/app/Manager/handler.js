@@ -91,4 +91,11 @@ module.exports = {
         });
     },
 
+    getAllManagerNoteWithTypeCondition: async (req, res) => {
+        const result = await ManagerNote.getAllWithTypeCondition(req.body.type);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
