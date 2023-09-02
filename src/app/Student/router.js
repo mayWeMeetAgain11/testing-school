@@ -11,6 +11,7 @@ const {
     updateFeedback,
     deleteFeedback,
     getAllFeedbacksWithStudent,
+    getOneStudentWithAllHisInfo,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -26,6 +27,8 @@ router.put('/feedbacks/update/:feedback_id', updateFeedback);
 router.get('/feedbacks/get-all', getAllFeedbacksWithStudent);
 
 router.get('/get-all', getAllStudentsWithGroups);
+
+router.get('/get/:student_id', getOneStudentWithAllHisInfo);
 
 router.get('/group/get-all/:group_id', getAllStudentsForOneGroup);
 

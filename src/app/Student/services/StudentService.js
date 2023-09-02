@@ -6,6 +6,8 @@ const {
     TeacherModel,
     TeacherSubjectModel,
     SubjectModel,
+    GroupTeacherSubjectModel,
+    ClassModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 const { Op } = require('sequelize');
@@ -219,6 +221,57 @@ class Student {
                 where: {
                     group_id: group_id
                 }
+            });
+            return {
+                data: students,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async getOneWithAllHisInfo(student_id) {
+        try {
+            const students = await StudentModel.findOne({
+                where: {
+                    id: student_id
+                },
+                include: [
+                    {
+                        model: GroupModel,
+                        as: 'group',
+                        include: [
+                            {
+                                model: GroupTeacherSubjectModel,
+                                as: 'group_teacher_subjects',
+                                include: [
+                                    {
+                                        model: TeacherSubjectModel,
+                                        as: 'teacher_subject',
+                                        include: [
+                                            {
+                                                model: SubjectModel,
+                                                as: 'subject',
+                                            },
+                                            {
+                                                model: TeacherModel,
+                                                as: 'teacher',
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                model: ClassModel,
+                                as: 'class'
+                            }
+                        ]
+                    }
+                ]
             });
             return {
                 data: students,

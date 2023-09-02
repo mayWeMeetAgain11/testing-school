@@ -76,6 +76,13 @@ module.exports = {
         });
     },
 
+    getOneStudentWithAllHisInfo: async (req, res) => {
+        const result = await Student.getOneWithAllHisInfo(req.params.student_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     getAllNotesForManyStudents: async (req, res) => {
         const result = await Student.getAllNotesForManyStudent(req.body.student_ids);
         res.status(result.status).send({
