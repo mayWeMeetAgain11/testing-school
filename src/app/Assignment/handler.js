@@ -18,6 +18,13 @@ module.exports = {
         });
     },
 
+    getAllFutureAssignmentsWithItsInfoForOneGroup: async (req, res) => {
+        const result = await Assignment.getAllForFutureForOneGroup(req.params.group_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     getAllFutureAssignmentsWithItsInfo: async (req, res) => {
         const result = await Assignment.getAllForFuture();
         res.status(result.status).send({

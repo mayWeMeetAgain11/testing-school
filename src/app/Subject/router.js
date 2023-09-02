@@ -3,7 +3,8 @@ const {
     updateSubject,
     deleteSubject,
     getAllTeacherSubjectsForOneStudent,
-    getAllTeacherSubjectsForOnegroup
+    getAllTeacherSubjectsForOnegroup,
+    getAllSubjectsForOneTeacher,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -15,6 +16,8 @@ router.put('/update/:id', isAuth, updateSubject);
 router.delete('/delete/:id', isAuth, deleteSubject);
 
 router.get('/get-all/student/:student_id', getAllTeacherSubjectsForOneStudent);
+
+router.get('/get-all/teacher/:teacher_id', getAllSubjectsForOneTeacher);
 
 router.get('/get-all/group/:group_id', getAllTeacherSubjectsForOnegroup);
 

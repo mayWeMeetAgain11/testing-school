@@ -39,4 +39,11 @@ module.exports = {
         });
     },
 
+    getAllSubjectsForOneTeacher: async (req, res) => {
+        const result = await Subject.getAllForOneTeacher(req.params.teacher_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

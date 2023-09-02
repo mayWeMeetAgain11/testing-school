@@ -1,4 +1,4 @@
-const { SubjectModel} = require('../index');
+const { SubjectModel, TeacherSubjectModel} = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
 class Subject {
@@ -10,6 +10,33 @@ class Subject {
     async add() {
         try {
             const subject = await SubjectModel.create(this);
+            return {
+                data: subject,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneTeacher(teacher_id) {
+        try {
+            const subject = await SubjectModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        attributes: [],
+                        where: {
+                            teacher_id: teacher_id
+                        },
+                        model: TeacherSubjectModel,
+                        as: 'teacher_subjects'
+                    }
+                ]
+            });
             return {
                 data: subject,
                 status: httpStatus.OK

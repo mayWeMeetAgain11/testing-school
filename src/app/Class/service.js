@@ -1,4 +1,12 @@
-const { ClassModel, GroupModel} = require('../index');
+const { 
+    ClassModel, 
+    GroupModel, 
+    GroupTeacherSubjectModel,
+    TeacherSubjectModel,
+    SubjectModel,
+    TeacherModel,
+    StudentModel,
+} = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
 class Class {
@@ -81,6 +89,61 @@ class Class {
                     {
                         model: GroupModel,
                         as:'groups'
+                    }
+                ]
+            });
+            return {
+                data: classes,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async getAllWithInfoForOneStudent(teacher_id) {
+        try {
+            const classes = await ClassModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: GroupModel,
+                        as:'groups',
+                        include: [
+                            {
+                                required: true,
+                                model: GroupTeacherSubjectModel,
+                                as: 'group_teacher_subjects',
+                                include: [
+                                    {
+                                        required: true,
+                                        model: TeacherSubjectModel,
+                                        as: 'teacher_subject',
+                                        where: {
+                                            teacher_id: teacher_id
+                                        },
+                                        include: [
+                                            {
+                                                model: SubjectModel,
+                                                as: 'subject'
+                                            },
+                                            {
+                                                model: TeacherModel,
+                                                as: 'teacher'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                required: true,
+                                model: StudentModel,
+                                as: 'students',
+                            }
+                        ]
                     }
                 ]
             });

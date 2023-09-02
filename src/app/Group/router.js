@@ -11,11 +11,11 @@ const {
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
 
-router.post('/add', isAuth, addGroup);
+router.post('/add', addGroup);
 
-router.put('/update/:id', isAuth, updateGroup);
+router.put('/update/:id', updateGroup);
 
-router.delete('/delete/:id', isAuth, deleteGroup);
+router.delete('/delete/:id', deleteGroup);
 
 router.get('/get-all', getAllGroupsWithInfo);
 

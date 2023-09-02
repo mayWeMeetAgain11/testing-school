@@ -1,4 +1,10 @@
-const { TeacherModel} = require('../../index');
+const { TeacherModel, 
+    TeacherSubjectModel,
+    SubjectModel,
+    GroupTeacherSubjectModel,
+    GroupModel,
+    ClassModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class Teacher {
@@ -15,6 +21,53 @@ class Teacher {
     async add() {
         try {
             const teacher = await TeacherModel.create(this);
+            return {
+                data: teacher,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllWithInfo(teacher_id) {
+        try {
+            const teacher = await TeacherModel.findAll({
+                where: {
+                    id: teacher_id
+                },
+                include: [
+                    {
+                        model: TeacherSubjectModel,
+                        as: 'teacher_subjects',
+                        include: [
+                            {
+                                model: SubjectModel,
+                                as: 'subject'
+                            },
+                            {
+                                model: GroupTeacherSubjectModel,
+                                as: 'group_teacher_subjects',
+                                include: [
+                                    {
+                                        model: GroupModel,
+                                        as: 'group',
+                                        include: [
+                                            {
+                                                model: ClassModel,
+                                                as: 'class'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                        ]
+                    }
+                ]
+            });
             return {
                 data: teacher,
                 status: httpStatus.OK

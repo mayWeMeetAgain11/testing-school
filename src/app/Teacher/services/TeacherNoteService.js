@@ -4,6 +4,7 @@ const {
     TeacherSubjectModel,
     TeacherNoteStudentModel,
     GroupModel,
+    ClassModel,
     StudentModel,
     SubjectModel,
 } = require('../../index');
@@ -111,6 +112,54 @@ class TeacherNote {
                         where: {
                             student_id: student_id
                         }
+                    },
+                ]
+            });
+            return {
+                data: teacherNotes,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneTeacher(teacher_id) {
+        try {
+            const teacherNotes = await TeacherNoteModel.findAll({
+                where: {
+                    id: teacher_id
+                },
+                include: [
+                    {
+                        model: TeacherModel,
+                        as: 'teacher',
+                    },
+                    {
+                        required: true,
+                        model: TeacherNoteStudentModel,
+                        as: 'teacher_note_students',
+                        include: [
+                            {
+                                model: StudentModel,
+                                as: 'student',
+                                include: [
+                                    {
+                                        model: GroupModel,
+                                        as: 'group',
+                                        include: [
+                                            {
+                                                model: ClassModel,
+                                                as: 'class'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
                     },
                 ]
             });

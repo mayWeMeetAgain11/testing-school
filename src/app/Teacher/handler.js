@@ -16,6 +16,20 @@ module.exports = {
         });
     },
 
+    getOneTeacherWithAllInfo: async (req, res) => {
+        const result = await Teacher.getAllWithInfo(req.params.teacher_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllTeacherNoteForoneTeacher: async (req, res) => {
+        const result = await TeacherNote.getAllForOneTeacher(req.params.teacher_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     addTeacherNote: async (req, res) => {
         let data = req.body;
         data.teacher_id = req.user.id;

@@ -31,4 +31,11 @@ module.exports = {
         });
     },
 
+    getAllClassesWithInfoForOneStudent: async (req, res) => {
+        const result = await Class.getAllWithInfoForOneStudent(req.params.teacher_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
