@@ -55,6 +55,13 @@ module.exports = {
         });
     },
 
+    getAllFeedbackForOneStudent: async (req, res) => {
+        const result = await Feedback.getAllForOneStudent(req.params.student_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     getAllStudentsWithGroups: async (req, res) => {
         const result = await Student.getAll();
         res.status(result.status).send({

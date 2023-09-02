@@ -55,6 +55,25 @@ class Feedback {
             }
         }
     }
+
+    static async getAllForOneStudent(student_id) {
+        try {
+            const feedback = await FeedbackModel.findAll({
+                where: {
+                    student_id: student_id
+                }
+            });
+            return {
+                data: feedback,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
     
     async update(id) {
         try {
