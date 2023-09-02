@@ -10,4 +10,11 @@ module.exports = {
         });
     },
 
+    addTheWholeSchedule: async (req, res) => {
+        const result = await Schedule.addAll(req.body.data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }

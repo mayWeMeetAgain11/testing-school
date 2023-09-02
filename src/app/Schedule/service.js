@@ -25,6 +25,21 @@ class Schedule {
         }
     }
 
+    static async addAll(data) {
+        try {
+            const Schedule = await ScheduleModel.bulkCreate(data);
+            return {
+                data: Schedule,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
 }
 
 module.exports = { Schedule };
