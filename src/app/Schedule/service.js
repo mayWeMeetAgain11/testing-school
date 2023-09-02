@@ -1,4 +1,9 @@
-const { ScheduleModel} = require('../index');
+const { ScheduleModel, 
+    GroupTeacherSubjectModel, 
+    TeacherSubjectModel,
+    SubjectModel,
+    TeacherModel,
+} = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
 class Schedule {
@@ -28,6 +33,48 @@ class Schedule {
     static async addAll(data) {
         try {
             const Schedule = await ScheduleModel.bulkCreate(data);
+            return {
+                data: Schedule,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllForOneGroup(group_id) {
+        try {
+            const Schedule = await ScheduleModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        where: {
+                            group_id: group_id
+                        },
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                    },
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                    },
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
             return {
                 data: Schedule,
                 status: httpStatus.OK

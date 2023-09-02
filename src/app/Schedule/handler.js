@@ -17,4 +17,11 @@ module.exports = {
         });
     },
 
+    getAllScheduleForOneGroup: async (req, res) => {
+        const result = await Schedule.getAllForOneGroup(req.params.group_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
 }
