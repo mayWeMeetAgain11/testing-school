@@ -28,6 +28,15 @@ module.exports = {
         });
     },
 
+    unRelateManagerNoteToOneGroup: async (req, res) => {
+        let data = req.body;
+        data.manager_note_id = req.params.manager_note_id;
+        const result = await ManagerNoteGroup.delete(data);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     relateManagerNoteWithManyGroups: async (req, res) => {
         const {manager_note_id} = req.params;
         const group_teacher_subject_ids = req.body.group_teacher_subject_ids;

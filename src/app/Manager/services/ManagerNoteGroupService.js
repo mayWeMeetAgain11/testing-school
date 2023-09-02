@@ -42,12 +42,39 @@ class ManagerNoteGroup {
         try {
             const ManagerNoteGroup = await ManagerNoteGroupModel.destroy({
                 where: {
-                    id: manager_note_id
+                    manager_note_id: manager_note_id
                 }
             });
             if (ManagerNoteGroup >= 0) {
                 return {
                     data: ManagerNoteGroup,
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    status: httpStatus.BAD_REQUEST
+                };
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async delete(data) {
+        try {
+            const ManagerNoteGroup = await ManagerNoteGroupModel.destroy({
+                where: {
+                    manager_note_id: data.manager_note_id,
+                    group_teacher_subject_id: data.group_teacher_subject_id
+                }
+            });
+            if (ManagerNoteGroup >= 0) {
+                return {
+                    data: 'deleted',
                     status: httpStatus.OK
                 };
             } else {
