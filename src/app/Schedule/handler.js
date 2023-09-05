@@ -10,6 +10,13 @@ module.exports = {
         });
     },
 
+    deleteSchedule: async (req, res) => {
+        const result = await Schedule.delete(req.params.schedule_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     addTheWholeSchedule: async (req, res) => {
         const result = await Schedule.addAll(req.body.data);
         res.status(result.status).send({
@@ -19,6 +26,20 @@ module.exports = {
 
     getAllScheduleForOneGroup: async (req, res) => {
         const result = await Schedule.getAllForOneGroup(req.params.group_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllScheduleForOneTeacher: async (req, res) => {
+        const result = await Schedule.getAllForOneTeacher(req.params.teacher_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllSchedule: async (req, res) => {
+        const result = await Schedule.getAll();
         res.status(result.status).send({
             data: result.data,
         });

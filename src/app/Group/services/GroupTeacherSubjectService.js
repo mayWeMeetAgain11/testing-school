@@ -1,4 +1,9 @@
-const { GroupTeacherSubjectModel} = require('../../index');
+const { GroupTeacherSubjectModel, 
+    TeacherSubjectModel,
+    SubjectModel,
+    TeacherModel,
+    GroupModel,
+} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
 class GroupTeacherSubject {
@@ -44,6 +49,42 @@ class GroupTeacherSubject {
                     status: httpStatus.BAD_REQUEST
                 };
             }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
+    static async getAll() {
+        try {
+            const groupTeacherSubjects = await GroupTeacherSubjectModel.findAll({
+                include: [
+                    {
+                        model: GroupModel,
+                        as: 'group'
+                    },
+                    {
+                        model: TeacherSubjectModel,
+                        as: 'teacher_subject',
+                        include: [
+                            {
+                                model: SubjectModel,
+                                as: 'subject'
+                            },
+                            {
+                                model: TeacherModel,
+                                as: 'teacher'
+                            },
+                        ]
+                    },
+                ]
+            });
+            return {
+                data: groupTeacherSubjects,
+                status: httpStatus.OK
+            };
         } catch (error) {
             return {
                 data: error.message,

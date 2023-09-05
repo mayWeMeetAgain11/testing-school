@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             values: type,
             allowNull: false,
         },
+        total_mark: {
+            type: DataTypes.DOUBLE,
+            allowNull: false,
+        },
         date: {
             type: DataTypes.DATE,
             allowNull: false,

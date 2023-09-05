@@ -16,6 +16,7 @@ class Assignment {
         this.group_teacher_subject_id = data.group_teacher_subject_id;
         this.date = data.date;
         this.type = data.type;
+        this.total_mark = data.total_mark;
     }
 
     async add() {
@@ -219,6 +220,68 @@ class Assignment {
                             {
                                 model: StudentModel,
                                 as: 'student',
+                            }
+                        ]
+                    },
+                    {
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                        
+                                    },
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                        
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                ],
+                order: ['date']
+            });
+            return {
+                data: Assignment,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAllPassedWithItsInfoForOneStudent(student_id) {
+        try {
+            const date = new Date();
+            const Assignment = await AssignmentModel.findAll({
+                where: {
+                    date: {
+                        [Op.lte]: date
+                    }
+                },
+                include: [
+                    {
+                        required: true,
+                        model: AssignmentStudentModel,
+                        as: 'assignment_students',
+                        include: [
+                            {
+                                required: true,
+                                model: StudentModel,
+                                as: 'student',
+                                where: {
+                                    id: student_id
+                                }
                             }
                         ]
                     },

@@ -48,6 +48,21 @@ class Subject {
             }
         }
     }
+
+    static async getAll() {
+        try {
+            const subject = await SubjectModel.findAll({});
+            return {
+                data: subject,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
             
     async update(id) {
         try {

@@ -39,6 +39,13 @@ module.exports = {
         });
     },
 
+    getAllSubject: async (req, res) => {
+        const result = await Subject.getAll();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     getAllSubjectsForOneTeacher: async (req, res) => {
         const result = await Subject.getAllForOneTeacher(req.params.teacher_id);
         res.status(result.status).send({

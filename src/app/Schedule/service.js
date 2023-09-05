@@ -3,6 +3,7 @@ const { ScheduleModel,
     TeacherSubjectModel,
     SubjectModel,
     TeacherModel,
+    GroupModel,
 } = require('../index');
 const httpStatus = require('../../../utils/httpStatus');
 
@@ -22,6 +23,33 @@ class Schedule {
                 data: Schedule,
                 status: httpStatus.OK
             };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async delete(id) {
+        try {
+            const Schedule = await ScheduleModel.destroy({
+                where: {
+                    id: id
+                }
+            });
+            if (Schedule > 0) {
+                return {
+                    data: 'deleted',
+                    status: httpStatus.OK
+                };
+            } else {
+                return {
+                    data: 'something went wrong',
+                    atatus: httpStatus.BAD_REQUEST
+                }
+            }
+            
         } catch (error) {
             return {
                 data: error.message,
@@ -57,6 +85,94 @@ class Schedule {
                             group_id: group_id
                         },
                         include: [
+                            {
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                    },
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+                                    },
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+            return {
+                data: Schedule,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    
+    static async getAllForOneTeacher(teacher_id) {
+        try {
+            const Schedule = await ScheduleModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                reuired: true,
+                                model: TeacherSubjectModel,
+                                as: 'teacher_subject',
+                                where: {
+                                    teacher_id: teacher_id
+                                },
+                                include: [
+                                    {
+                                        model: SubjectModel,
+                                        as: 'subject',
+                                    },
+                                    {
+                                        model: TeacherModel,
+                                        as: 'teacher',
+
+                                    },
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+            return {
+                data: Schedule,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
+    static async getAll() {
+        try {
+            const Schedule = await ScheduleModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: GroupTeacherSubjectModel,
+                        as: 'group_teacher_subject',
+                        include: [
+                            {
+                                model: GroupModel,
+                                as: 'group'
+                            },
                             {
                                 model: TeacherSubjectModel,
                                 as: 'teacher_subject',

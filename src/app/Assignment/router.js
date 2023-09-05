@@ -8,6 +8,8 @@ const {
     getAllFutureAssignmentsWithItsInfo,
     getAllPassedAssignmentsWithItsInfo,
     getAllFutureAssignmentsWithItsInfoForOneGroup,
+    getAllPassedAssignmentsWithItsInfoForOneStudent,
+    getAllPassedAssignmentsWithItsInfoForOneStudentAlLaythForHeadache,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -25,6 +27,10 @@ router.get('/get-all', getAllAssignmentsWithItsInfo);
 router.get('/not-done-yet/get-all/:group_id', getAllFutureAssignmentsWithItsInfoForOneGroup);
 
 router.get('/not-done-yet/get-all', getAllFutureAssignmentsWithItsInfo);
+
+router.get('/passed/get-all/:student_id', getAllPassedAssignmentsWithItsInfoForOneStudent);
+
+router.get('/passed/get-all/allyth/:student_id', getAllPassedAssignmentsWithItsInfoForOneStudentAlLaythForHeadache);
 
 router.get('/passed/get-all', getAllPassedAssignmentsWithItsInfo);
 

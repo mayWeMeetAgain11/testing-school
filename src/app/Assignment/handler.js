@@ -39,6 +39,30 @@ module.exports = {
         });
     },
 
+    getAllPassedAssignmentsWithItsInfoForOneStudent: async (req, res) => {
+        const result = await Assignment.getAllPassedWithItsInfoForOneStudent(req.params.student_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllPassedAssignmentsWithItsInfoForOneStudentAlLaythForHeadache: async (req, res) => {
+        const result = await Assignment.getAllPassedWithItsInfoForOneStudent(req.params.student_id);
+        let finalResult = [];
+        let assignment = {};
+        for (let i = 0; i < result.data.length; i++) {
+            assignment.mark = result.data[i].assignment_students[0].mark;
+            assignment.total_mark = result.data[i].total_mark;
+            assignment.date = result.data[i].date;
+            assignment.subject = result.data[i].group_teacher_subject.teacher_subject.subject.name;
+            finalResult.push(assignment);
+            assignment = {};
+        }
+        res.status(result.status).send({
+            data: finalResult,
+        });
+    },
+
     relateOneStudentWithAssignment: async (req, res) => {
         const result = await new AssignmentStudent(req.body).add();
         res.status(result.status).send({

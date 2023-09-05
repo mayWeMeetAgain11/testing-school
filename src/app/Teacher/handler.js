@@ -2,6 +2,7 @@ const { Teacher,  } = require('./services/TeacherService');
 const { TeacherSubject,  } = require('./services/TeacherSubjectService');
 const { TeacherNote,  } = require('./services/TeacherNoteService');
 const { TeacherNoteStudent,  } = require('./services/TeacherNoteStudentService');
+const { Student,  } = require('../Student/services/StudentService');
 const { Factory,  } = require('./services/helper/factory');
 const httpStatus = require('../../../utils/httpStatus');
 const {database} = require('../index');
@@ -11,6 +12,13 @@ module.exports = {
 
     addTeacher: async (req, res) => {
         const result = await new Teacher(req.body).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    getAllTeacher: async (req, res) => {
+        const result = await Teacher.getAll();
         res.status(result.status).send({
             data: result.data,
         });
@@ -32,13 +40,42 @@ module.exports = {
 
     addTeacherNote: async (req, res) => {
         let data = req.body;
-        data.teacher_id = req.user.id;
+        data.teacher_id = req.params.teacher_id;
         const result = await new TeacherNote(data).add();
         res.status(result.status).send({
             data: result.data,
         });
     },
-        
+
+    addTeacherNoteWithStudents: async (req, res) => {
+        const student_ids = req.body.student_ids;
+        const result = await database.transaction(async (t) => {
+            const teacherNote = await new TeacherNote(req.body).add();
+            const factoriedData = Factory.relateAllStudentssWithOneNote(student_ids, teacherNote.data.dataValues.id);
+            const finalResult = await TeacherNoteStudent.relateAllGroupOfStudents(factoriedData, {transaction: t});
+            return finalResult;
+        });
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    relateNoteWithAllStudentsOfGroup: async (req, res) => {
+        const result = await database.transaction(async (t) => {
+            const students = await Student.getAllForOneGroup(req.params.group_id);
+            const student_ids = [];
+            for (let i = 0; i < students.data.length; i++) {
+                student_ids.push(students.data[i].dataValues.id);
+            }
+            const factoriedData = Factory.relateAllStudentssWithOneNote(student_ids, req.body.teacher_note_id);
+            const finalResult = await TeacherNoteStudent.relateAllGroupOfStudents(factoriedData, {transaction: t});
+            return finalResult;
+        });
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     teacherLogin: async (req, res) => {
         const {email, password} = req.body;
         const result = await Teacher.login(email, password);
@@ -66,6 +103,13 @@ module.exports = {
     
     deleteTeacher: async (req, res) => {
         const result = await Teacher.delete(req.params.id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+    
+    getAllTeacherSubject: async (req, res) => {
+        const result = await TeacherSubject.getAll(req.params.id);
         res.status(result.status).send({
             data: result.data,
         });

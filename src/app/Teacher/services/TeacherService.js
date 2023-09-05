@@ -79,6 +79,21 @@ class Teacher {
             }
         }
     }
+
+    static async getAll() {
+        try {
+            const teacher = await TeacherModel.findAll({});
+            return {
+                data: teacher,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
             
     static async login(email, password) {
         try {

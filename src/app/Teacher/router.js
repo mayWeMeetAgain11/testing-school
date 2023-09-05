@@ -16,7 +16,11 @@ const {
     getAllTeahcherNotesForOneGroup,
     getAllTeahcherNotesForOneClass,
     getOneTeacherWithAllInfo,
-    getAllTeacherNoteForoneTeacher
+    getAllTeacherNoteForoneTeacher,
+    getAllTeacher,
+    addTeacherNoteWithStudents,
+    relateNoteWithAllStudentsOfGroup,
+    getAllTeacherSubject,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
@@ -27,6 +31,26 @@ router.get('/get/:teacher_id', getOneTeacherWithAllInfo);
 
 router.get('/note/get/:teacher_id', getAllTeacherNoteForoneTeacher);
 
+router.get('/notes/students/get-all/:student_id',getAllTeahcherNotesForOneStudent);
+
+router.post('/notes/students/add-one/:id', relateNoteWithStudent);
+
+router.post('/notes/add-with-students', addTeacherNoteWithStudents);
+
+router.post('/notes/group/add/:group_id', relateNoteWithAllStudentsOfGroup);
+
+router.delete('/delete/:id', deleteTeacher);
+
+router.delete('/notes/delete/:id', deleteNote);
+
+router.post('/notes/students/add-all/:id', relateNoteWithAllStudentsGroup);
+
+router.post('/notes/add/:teacher_id', addTeacherNote);
+
+router.get('/get-all',getAllTeacher);
+
+router.get('/subject/get-all',getAllTeacherSubject);
+
 router.use(isAuth);
 
 router.post('/register', addTeacher);
@@ -35,25 +59,13 @@ router.put('/update', updateTeacher);
 
 router.put('/notes/update/:note_id', updateTeacherNote);
 
-router.delete('/delete/:id', deleteTeacher);
-
-router.delete('/notes/delete/:id', deleteNote);
-
-router.post('/notes/students/add-one/:id', relateNoteWithStudent);
-
-router.post('/notes/students/add-all/:id', relateNoteWithAllStudentsGroup);
-
 router.delete('/notes/students/delete-one/:id',unRelateNoteWithOneStudent);
-
-router.get('/notes/students/get-all/:student_id',getAllTeahcherNotesForOneStudent);
 
 router.get('/notes/groups/get-all/:group_id',getAllTeahcherNotesForOneGroup);
 
 router.get('/notes/classes/get-all/:class_id',getAllTeahcherNotesForOneClass);
 
 router.post('/subjects/add-one', addSubjectToTeacher);
-
-router.post('/notes/add', addTeacherNote);
 
 router.post('/subjects/add-all/:teacher_id', relateAllGroupOfSubjectsToTeacher);
 

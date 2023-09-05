@@ -164,6 +164,46 @@ class Student {
         }
     }
     
+    static async getAllForOneTeacher(teacher_id) {
+        try {
+            const students = await StudentModel.findAll({
+                include: [
+                    {
+                        required: true,
+                        model: GroupModel,
+                        as: 'group',
+                        include: [
+                            {
+                                required: true,
+                                model: GroupTeacherSubjectModel,
+                                as: 'group_teacher_subjects',
+                                include: [
+                                    {
+                                        required: true,
+                                        model: TeacherSubjectModel,
+                                        as: 'teacher_subject',
+                                        where: {
+                                            teacher_id: teacher_id
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+            return {
+                data: students,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+    
     static async getAllNotesForManyStudent(student_ids) {
         try {
             const students = await StudentModel.findAll({

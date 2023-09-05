@@ -13,11 +13,12 @@ const {
     getAllFeedbacksWithStudent,
     getOneStudentWithAllHisInfo,
     getAllFeedbackForOneStudent,
+    getAllStudentsWithGroupsForOneTeacher,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
 
-router.post('/register', isAuth, addStudent);
+router.post('/register', addStudent);
 
 router.post('/feedbacks/add', addFeedback);
 
@@ -30,6 +31,8 @@ router.get('/feedbacks/get-all', getAllFeedbacksWithStudent);
 router.get('/feedbacks/get-all/:student_id', getAllFeedbackForOneStudent);
 
 router.get('/get-all', getAllStudentsWithGroups);
+
+router.get('/get-all/teacher/:teacher_id', getAllStudentsWithGroupsForOneTeacher);
 
 router.get('/get/:student_id', getOneStudentWithAllHisInfo);
 
