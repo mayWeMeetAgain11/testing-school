@@ -1,8 +1,11 @@
 const { Manager } = require('./services/ManagerService');
 const { ManagerNote } = require('./services/ManagerNoteService');
 const { ManagerNoteGroup } = require('./services/ManagerNoteGroupService');
+const { ManagerNoteTeacher } = require('./services/ManagerNoteTeacherService');
+const { ManagerNoteStudent } = require('./services/ManagerNoteStudentService');
 const { Factory,  } = require('./services/helper/factory');
 const {database} = require('../index');
+const httpStatus = require('../../../utils/httpStatus');
 
 
 module.exports = {
@@ -52,17 +55,54 @@ module.exports = {
     },
 
     addManagerNoteWithAllRelations: async (req, res) => {
-        const group_teacher_subject_ids = req.body.group_teacher_subject_ids;
-        const result = await database.transaction(async (t) => {
-            const managerNote = await new ManagerNote(req.body).add();
-            console.log(managerNote);
-            const factoriedData = Factory.relateAllObjectsWithOneProperty(group_teacher_subject_ids, managerNote.data.dataValues.id);
-            // console.log(factoriedData);
-            const finalResult = await ManagerNoteGroup.addAll(factoriedData, {transaction: t});
-            // console.log(finalResult);
-            // await transaction.commit();
-            return finalResult;
-        });
+        let result;
+        if (req.body.type == "group") {
+            const group_ids = req.body.group_ids;
+            result = await database.transaction(async (t) => {
+                const managerNote = await new ManagerNote(req.body).add();
+                if (managerNote.status == httpStatus.BAD_REQUEST) {
+                    return {
+                        data: "bad request or something wrong happend",
+                        status: httpStatus.BAD_REQUEST
+                    };
+                } else {
+                    const factoriedData = Factory.relateAllObjectsWithOneProperty(group_ids, managerNote.data.dataValues.id);
+                    const finalResult = await ManagerNoteGroup.addAll(factoriedData, {transaction: t});
+                    return finalResult;
+                }
+            });
+        } else if (req.body.type == "teacher") {
+            const teacher_ids = req.body.teacher_ids;
+            result = await database.transaction(async (t) => {
+                const managerNote = await new ManagerNote(req.body).add();
+                if (managerNote.status == httpStatus.BAD_REQUEST) {
+                    return {
+                        data: "bad request or something wrong happend",
+                        status: httpStatus.BAD_REQUEST
+                    };
+                } else {
+                    const factoriedData = Factory.relateAllTeachersWithOneManagerNote(teacher_ids, managerNote.data.dataValues.id);
+                    const finalResult = await ManagerNoteTeacher.addAll(factoriedData, {transaction: t});
+                    return finalResult;
+                }
+            });
+        } else {
+            const student_ids = req.body.student_ids;
+            result = await database.transaction(async (t) => {
+                const managerNote = await new ManagerNote(req.body).add();
+                if (managerNote.status == httpStatus.BAD_REQUEST) {
+                    return {
+                        data: "bad request or something wrong happend",
+                        status: httpStatus.BAD_REQUEST
+                    };
+                } else {
+                    const factoriedData = Factory.relateAllStudentsWithOneManagerNote(student_ids, managerNote.data.dataValues.id);
+                    const finalResult = await ManagerNoteStudent.addAll(factoriedData, {transaction: t});
+                    return finalResult;
+                }
+            });
+        }
+        
         res.status(result.status).send({
             data: result.data,
         });
@@ -92,7 +132,15 @@ module.exports = {
     },
 
     getAllManagerNoteWithTypeCondition: async (req, res) => {
-        const result = await ManagerNote.getAllWithTypeCondition(req.body.type);
+        let result;
+        if (req.body.type == "group") {
+            result = await ManagerNote.getAllWithGroups();
+        } else if (req.body.type == "teacher") {
+            result = await ManagerNote.getAllWithTeachers();
+        } else {
+            result = await ManagerNote.getAllWithStudents();
+        }
+        // result = await ManagerNote.getAllWithTypeCondition(req.body.type);
         res.status(result.status).send({
             data: result.data,
         });

@@ -1,18 +1,18 @@
-const { ManagerNoteGroupModel} = require('../../index');
+const { ManagerNoteStudentModel} = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
-class ManagerNoteGroup {
+class ManagerNoteStudent {
 
     constructor(data) {
         this.manager_note_id = data.manager_note_id;
-        this.group_id = data.group_id;
+        this.student_id = data.student_id;
     }
 
     async add() {
         try {
-            const ManagerNoteGroup = await ManagerNoteGroupModel.create(this);
+            const ManagerNoteStudent = await ManagerNoteStudentModel.create(this);
             return {
-                data: ManagerNoteGroup,
+                data: ManagerNoteStudent,
                 status: httpStatus.OK
             };
         } catch (error) {
@@ -25,9 +25,9 @@ class ManagerNoteGroup {
 
     static async addAll(data) {
         try {
-            const ManagerNoteGroup = await ManagerNoteGroupModel.bulkCreate(data);
+            const ManagerNoteStudent = await ManagerNoteStudentModel.bulkCreate(data);
             return {
-                data: ManagerNoteGroup,
+                data: ManagerNoteStudent,
                 status: httpStatus.OK
             };
         } catch (error) {
@@ -40,14 +40,14 @@ class ManagerNoteGroup {
 
     static async deleteAllForOneManagerNote(manager_note_id) {
         try {
-            const ManagerNoteGroup = await ManagerNoteGroupModel.destroy({
+            const ManagerNoteStudent = await ManagerNoteStudentModel.destroy({
                 where: {
                     manager_note_id: manager_note_id
                 }
             });
-            if (ManagerNoteGroup >= 0) {
+            if (ManagerNoteStudent >= 0) {
                 return {
-                    data: ManagerNoteGroup,
+                    data: ManagerNoteStudent,
                     status: httpStatus.OK
                 };
             } else {
@@ -66,13 +66,13 @@ class ManagerNoteGroup {
 
     static async delete(data) {
         try {
-            const ManagerNoteGroup = await ManagerNoteGroupModel.destroy({
+            const ManagerNoteStudent = await ManagerNoteStudentModel.destroy({
                 where: {
                     manager_note_id: data.manager_note_id,
-                    group_id: data.group_id
+                    student_id: data.student_id
                 }
             });
-            if (ManagerNoteGroup >= 0) {
+            if (ManagerNoteStudent >= 0) {
                 return {
                     data: 'deleted',
                     status: httpStatus.OK
@@ -93,4 +93,4 @@ class ManagerNoteGroup {
 
 }
 
-module.exports = { ManagerNoteGroup };
+module.exports = { ManagerNoteStudent };

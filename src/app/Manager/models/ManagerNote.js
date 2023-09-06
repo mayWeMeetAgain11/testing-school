@@ -12,7 +12,15 @@ module.exports = (sequelize, DataTypes) => {
             }); 
             this.hasMany(models.ManagerNoteGroupModel, {
                 foreignKey: 'manager_note_id',
-                as: 'manager_group_notes'
+                as: 'manager_note_groups'
+            }); 
+            this.hasMany(models.ManagerNoteTeacherModel, {
+                foreignKey: 'manager_note_id',
+                as: 'manager_note_teachers'
+            }); 
+            this.hasMany(models.ManagerNoteStudentModel, {
+                foreignKey: 'manager_note_id',
+                as: 'manager_note_students'
             }); 
         }
     }

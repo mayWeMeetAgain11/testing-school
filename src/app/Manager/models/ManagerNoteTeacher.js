@@ -2,26 +2,26 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class ManagerNoteGroupModel extends Model {
+    class ManagerNoteTeacherModel extends Model {
 
         static associate(models) {
             this.belongsTo(models.ManagerNoteModel, {
                 foreignKey: 'manager_note_id',
                 as: 'manager_note'
             }); 
-            this.belongsTo(models.GroupModel, {
-                foreignKey: 'group_id',
-                as: 'group'
+            this.belongsTo(models.TeacherModel, {
+                foreignKey: 'teacher_id',
+                as: 'teacher'
             }); 
         }
     }
-    ManagerNoteGroupModel.init({
+    ManagerNoteTeacherModel.init({
 
     }, {
         sequelize,
-        modelName: 'ManagerNoteGroupModel',
-        tableName: 'manager_note_groups',
+        modelName: 'ManagerNoteTeacherModel',
+        tableName: 'manager_note_teachers',
         underscored: true
     });
-    return ManagerNoteGroupModel;
+    return ManagerNoteTeacherModel;
 };

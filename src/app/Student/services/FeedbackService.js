@@ -2,6 +2,7 @@ const {
     FeedbackModel,
     StudentModel,
     GroupModel,
+    ClassModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 
@@ -38,7 +39,12 @@ class Feedback {
                             {
                                 model: GroupModel,
                                 as: 'group',
-                                
+                                include: [
+                                    {
+                                        model: ClassModel,
+                                        as: 'class'
+                                    }
+                                ]
                             }
                         ]
                     }

@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'group_teacher_subject_id',
                 as: 'schedules'
             }); 
-            this.hasMany(models.ManagerNoteGroupModel, {
-                foreignKey: 'group_teacher_subject_id',
-                as: 'manager_group_notes'
-            }); 
+            // this.hasMany(models.ManagerNoteGroupModel, {
+            //     foreignKey: 'group_teacher_subject_id',
+            //     as: 'manager_group_notes'
+            // }); 
         }
     }
     GroupTeacherSubjectModel.init({

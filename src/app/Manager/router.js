@@ -19,7 +19,7 @@ router.post('/note/add', addManagerNote);
 
 router.get('/note/get-all', getAllManagerNoteWithTypeCondition);
 
-router.post('/note/add-with-groups', addManagerNoteWithAllRelations);
+router.post('/note/add-with-relations', addManagerNoteWithAllRelations);
 
 router.post('/note/relate-with-one-group', relateManagerNoteToOneGroup);
 
