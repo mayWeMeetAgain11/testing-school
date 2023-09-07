@@ -51,9 +51,9 @@ router.get('/get-all',getAllTeacher);
 
 router.get('/subject/get-all',getAllTeacherSubject);
 
-router.use(isAuth);
-
 router.post('/register', addTeacher);
+
+router.use(isAuth);
 
 router.put('/update', updateTeacher);
 
