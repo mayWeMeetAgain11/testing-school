@@ -28,6 +28,13 @@ module.exports = {
         });
     },
 
+    getAllGroupTeacherSubjectForOneGroup: async (req, res) => {
+        const result = await GroupTeacherSubject.getAllForOneGroup(req.params.group_id);
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
     addTeacherSubjectToGroup: async (req, res) => {
         const result = await new GroupTeacherSubject(req.body).add();
         res.status(result.status).send({
