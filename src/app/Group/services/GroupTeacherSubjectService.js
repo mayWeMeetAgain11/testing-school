@@ -93,6 +93,45 @@ class GroupTeacherSubject {
         }
     }
 
+    static async getAllForOneGroup(group_id) {
+        try {
+            const groupTeacherSubjects = await GroupTeacherSubjectModel.findAll({
+                where: {
+                    group_id: group_id
+                },
+                include: [
+                    {
+                        model: GroupModel,
+                        as: 'group'
+                    },
+                    {
+                        model: TeacherSubjectModel,
+                        as: 'teacher_subject',
+                        include: [
+                            {
+                                model: SubjectModel,
+                                as: 'subject'
+                            },
+                            {
+                                model: TeacherModel,
+                                as: 'teacher'
+                            },
+                        ]
+                    },
+                ]
+            });
+            return {
+                data: groupTeacherSubjects,
+                status: httpStatus.OK
+            };
+        } catch (error) {
+            return {
+                data: error.message,
+                status: httpStatus.BAD_REQUEST
+            }
+        }
+    }
+
     static async deleteAllForOneGroup(group_id) {
         try {
             const groupTeacherSubjects = await GroupTeacherSubjectModel.destroy({
