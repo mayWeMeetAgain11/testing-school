@@ -53,6 +53,8 @@ router.get('/subject/get-all',getAllTeacherSubject);
 
 router.post('/register', addTeacher);
 
+router.post('/subjects/add-one', addSubjectToTeacher);
+
 router.use(isAuth);
 
 router.put('/update', updateTeacher);
@@ -64,8 +66,6 @@ router.delete('/notes/students/delete-one/:id',unRelateNoteWithOneStudent);
 router.get('/notes/groups/get-all/:group_id',getAllTeahcherNotesForOneGroup);
 
 router.get('/notes/classes/get-all/:class_id',getAllTeahcherNotesForOneClass);
-
-router.post('/subjects/add-one', addSubjectToTeacher);
 
 router.post('/subjects/add-all/:teacher_id', relateAllGroupOfSubjectsToTeacher);
 
