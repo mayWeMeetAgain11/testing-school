@@ -85,7 +85,7 @@ module.exports = {
     },
     
     updateTeacher: async (req, res) => {
-        const result = await new Teacher(req.body).update(req.user.id);
+        const result = await new Teacher(req.body).update(req.params.teacher_id);
         res.status(result.status).send({
             data: result.data,
         });
