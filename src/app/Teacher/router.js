@@ -55,9 +55,9 @@ router.post('/register', addTeacher);
 
 router.post('/subjects/add-one', addSubjectToTeacher);
 
-router.use(isAuth);
+router.put('/update/:teacher_id', updateTeacher);
 
-router.put('/update', updateTeacher);
+router.use(isAuth);
 
 router.put('/notes/update/:note_id', updateTeacherNote);
 
