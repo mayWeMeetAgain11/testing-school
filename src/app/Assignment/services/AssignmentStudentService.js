@@ -13,9 +13,9 @@ class AssignmentStudent {
         try {
             const AssignmentStudentOld = await AssignmentStudentModel.findOne({
                 where: {
-                    assignment_id = this.assignment_id,
-                    student_id = this.student_id,
-                    mark = this.mark,
+                    assignment_id: this.assignment_id,
+                    student_id: this.student_id,
+                    mark: this.mark,
                 }
             });
             if (AssignmentStudentOld) {
