@@ -19,7 +19,7 @@ class AssignmentStudent {
                 }
             });
             if (AssignmentStudentOld) {
-                const AssignmentStudentOld = await AssignmentStudentModel.destroy({
+                const DeletedAssignmentStudent = await AssignmentStudentModel.destroy({
                     where: {
                         id: AssignmentStudentOld.id
                     }
