@@ -11,6 +11,20 @@ class AssignmentStudent {
 
     async add() {
         try {
+            const AssignmentStudentOld = await AssignmentStudentModel.findOne({
+                where: {
+                    assignment_id = this.assignment_id,
+                    student_id = this.student_id,
+                    mark = this.mark,
+                }
+            });
+            if (AssignmentStudentOld) {
+                const AssignmentStudentOld = await AssignmentStudentModel.destroy({
+                    where: {
+                        id: AssignmentStudentOld.id
+                    }
+                });
+            }
             const AssignmentStudent = await AssignmentStudentModel.create(this);
             return {
                 data: AssignmentStudent,
