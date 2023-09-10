@@ -15,7 +15,15 @@ class GroupTeacherSubject {
 
     async add() {
         try {
-            const groupTeacherSubject = await GroupTeacherSubjectModel.create(this);
+            const groupTeacherSubjectOld = await GroupTeacherSubjectModel.findOne({
+                where: {
+                    group_id: this.group_id,
+                    teacher_subject_id: this.teacher_subject_id
+                }
+            });
+            if (!groupTeacherSubjectOld) {
+                const groupTeacherSubject = await GroupTeacherSubjectModel.create(this);
+            }
             return {
                 data: 'related succcuessfully',
                 status: httpStatus.OK
