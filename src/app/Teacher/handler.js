@@ -124,6 +124,7 @@ module.exports = {
 
     addSubjectToTeacher: async (req, res) => {
         let data = req.body;
+        console.log(data);
         const result = await new TeacherSubject(data).add();
         res.status(result.status).send({
             data: result.data,
