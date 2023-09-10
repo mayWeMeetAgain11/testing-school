@@ -27,7 +27,7 @@ router.get('/teacher-subject/get-all/:group_id', getAllGroupTeacherSubjectForOne
 
 router.get('/get-all/:id', getAllGroupsForOneClass);
 
-router.post('/teacher-subject/add-one', isAuth, addTeacherSubjectToGroup);
+router.post('/teacher-subject/add-one', addTeacherSubjectToGroup);
 
 router.delete('/teacher-subject/delete-one/:teacher_subject_id', unRelateGroupWithOneTeacherSubject);
 
