@@ -17,7 +17,15 @@ class TeacherSubject {
 
     async add() {
         try {
-            const teacherSubject = await TeacherSubjectModel.create(this);
+            const teacherSubjectOld = await TeacherSubjectModel.findOne({
+                where: {
+                    teacher_id: this.teacher_id,
+                    subject_id: this.subject_id
+                }
+            });
+            if (!teacherSubjectOld) {
+                const teacherSubject = await TeacherSubjectModel.create(this);
+            }
             return {
                 data: 'related successfully',
                 status: httpStatus.OK
