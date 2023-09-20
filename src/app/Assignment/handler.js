@@ -1,11 +1,28 @@
 const { Assignment, } = require('./services/AssignmentService');
 const { AssignmentStudent, } = require('./services/AssignmentStudentService');
+const { AssignmentPdf, } = require('./services/AssignmentPdfService');
 
 
 module.exports = {
 
     addAssignment: async (req, res) => {
         const result = await new Assignment(req.body).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    addAssignmentPdf: async (req, res) => {
+        const data = req.body;
+        data.url = req.file;
+        const result = await new AssignmentPdf(data).add();
+        res.status(result.status).send({
+            data: result.data,
+        });
+    },
+
+    deleteAssignmentPdf: async (req, res) => {
+        const result = await AssignmentPdf.delete(req.params.assignment_pdf_id);
         res.status(result.status).send({
             data: result.data,
         });
