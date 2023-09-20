@@ -10,11 +10,18 @@ const {
     getAllFutureAssignmentsWithItsInfoForOneGroup,
     getAllPassedAssignmentsWithItsInfoForOneStudent,
     getAllPassedAssignmentsWithItsInfoForOneStudentAlLaythForHeadache,
+    addAssignmentPdf,
+    deleteAssignmentPdf,
 } = require('./handler');
 const router = require('express').Router();
 const isAuth = require('../../../utils/auth/jwtMiddleware');
+const  {upload} = require('../../../utils/multer/uplaodFiles');
 
 router.post('/add', addAssignment);
+
+router.post('/pdf/add', upload.single('pdf'), addAssignmentPdf);
+
+router.delete('/pdf/delete/:assignment_pdf_id', deleteAssignmentPdf);
 
 router.post('/students/add', relateOneStudentWithAssignment);
 
