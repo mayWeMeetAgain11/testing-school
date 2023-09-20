@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'group_teacher_subject_id',
                 as: 'group_teacher_subject'
             }); 
+            this.hasMany(models.AssignmentPdfModel, {
+                foreignKey: 'assignment_id',
+                as: 'assignment_pdfs'
+            });
         }
     }
     AssignmentModel.init({
