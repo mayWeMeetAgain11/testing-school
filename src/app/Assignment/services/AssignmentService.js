@@ -6,6 +6,7 @@ const {
     TeacherSubjectModel,
     TeacherModel,
     SubjectModel,
+    AssignmentPdfModel,
 } = require('../../index');
 const httpStatus = require('../../../../utils/httpStatus');
 const { Op } = require('sequelize');
@@ -38,6 +39,10 @@ class Assignment {
         try {
             const Assignment = await AssignmentModel.findAll({
                 include: [
+                    {
+                        model: AssignmentPdfModel,
+                        as: 'assignment_pdfs'
+                    },
                     {
                         model: AssignmentStudentModel,
                         as: 'assignment_students',
@@ -96,6 +101,10 @@ class Assignment {
                 },
                 include: [
                     {
+                        model: AssignmentPdfModel,
+                        as: 'assignment_pdfs'
+                    },
+                    {
                         model: AssignmentStudentModel,
                         as: 'assignment_students',
                         include: [
@@ -152,6 +161,10 @@ class Assignment {
                     },
                 },
                 include: [
+                    {
+                        model: AssignmentPdfModel,
+                        as: 'assignment_pdfs'
+                    },
                     {
                         model: AssignmentStudentModel,
                         as: 'assignment_students',
@@ -214,6 +227,10 @@ class Assignment {
                 },
                 include: [
                     {
+                        model: AssignmentPdfModel,
+                        as: 'assignment_pdfs'
+                    },
+                    {
                         model: AssignmentStudentModel,
                         as: 'assignment_students',
                         include: [
@@ -270,6 +287,10 @@ class Assignment {
                     }
                 },
                 include: [
+                    {
+                        model: AssignmentPdfModel,
+                        as: 'assignment_pdfs'
+                    },
                     {
                         required: true,
                         model: AssignmentStudentModel,
