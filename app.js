@@ -29,8 +29,8 @@ app.use('/houdix/school/schedules', require('./src/app/Schedule/router'));
 app.use('/houdix/school/drive-pdfs', require('./src/app/DrivePdf/router'));
 
 app.listen({ port: process.env.PORT }, async () => {
-    await database.sync({
-        alter: true,
+    await database.authenticate({
+        // alter: true,
         // force: true
     }); 
     console.log('starting on port : ' + process.env.PORT);
