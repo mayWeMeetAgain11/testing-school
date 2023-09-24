@@ -10,7 +10,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/houdix-school/public', express.static(path.join(__dirname, 'public')));
+app.use('/houdix-school', express.static(path.join(__dirname, 'public')));
 
 
 app.get('/houdix/school', (req, res) => {
